@@ -44,6 +44,7 @@
 #include <queue>
 #include <assert.h>
 #include <string>
+#include <sstream>
 
 //  <========== NAMESPACES ==========>
 
@@ -115,6 +116,7 @@ using mitiii = map<int, tiii>;
 using misi = map<int, si>;
 using mivi = map<int, vi>;
 using qi = /* not BenQi */ queue<int>;
+using vqi = vector<qi>;
 
 //  <========== DEFINLNFXS ==========>
 
@@ -1122,49 +1124,29 @@ namespace MitsaPrepare {
 
 
 			int n = xin();
+
 			vvi hist(n);
-			int sum = 0;
 			for (int i = 0; i < n; i++) {
-				for (int j = 0; j < min(n - i, n-1); j++) {
+				for (int j = 0; j < (i == 0 ? n - 1 : n - i); j++) {
 					hist[i].pb(xin());
-					if (j == 0)sum += hist[i][0];
 				}
 			}
-			vi p(n, 0);
-			for (int i = 0; i < n; i++)p[i] = i;
-			vi selBy(n + 1, 0); selBy[n] = sum;
-			int last = n;
-			int ppool = 0;
-			for (int j = 0; j < n - 1; j++) {
-				int mn = 1e9, mi = -1; 
-				for (int i = 0; i < n - j; i++) {
-					int idx = p[i];
-					//cout << "Drop at " << idx << ' ' << i << ' ' << j << ' ' << selBy[idx] - hist[i][j] << endl;
-					if (hist[i][j] < mn) {
-						mn = hist[i][j];
-						mi = idx;
-					}
-					if (selBy[idx] > hist[i][j]) {
-						ppool += selBy[idx] - hist[i][j];
-						selBy[idx] = hist[i][j];
-					}
-					else if (selBy[idx] < hist[i][j]) {
-						int toAdd = hist[i][j] - selBy[idx];
-						selBy[idx] += min(selBy[last], toAdd);
-						selBy[last] -= min(selBy[last], toAdd);
-						//pool -= hist[i][j] - selBy[idx];
-						//selBy[idx] = hist[i][j];
-					}
+			for (int i = 0; i < n; i++) {
+				for (int j = (i == 0 ? n - 1 : n - i) - 1 - 1; j >= 0; j--) {
+					hist[i][j] = min(hist[i][j], hist[i][j + 1]);
 				}
-				vi newP; newP.reserve(p.sz - 1);
-				for (auto i : p) {
-					if (i != mi) {
-						newP.pb(i);
-					}
-				}
-				p = newP;
 			}
-			cout << hist[0][n-2]+hist[1][n-2] - ppool;
+			vi sums(n, 0);
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < (i == 0 ? n - 1 : n - i); j++) {
+					sums[j] += hist[i][j];
+				}
+			}
+			int res = 1e9;
+			for (int i = 0; i < n - 1; i++) {
+				res = min(res, sums[i]);
+			}
+			cout << res << endl;
 		}
 	}
 	namespace Week2{
@@ -1293,13 +1275,40 @@ namespace MitsaPrepare {
 			cout << res << endl;
 		}
 		void solve3() {
-			string line;
-			getline(std::cin, line);
-			istringstream iss(line);
-			int num = 0;
-			while (iss >> num)
-			{
-				numbers.push_back(enterNumber);
+			freopen("graph.in", "r", stdin);
+			freopen("graph.out", "w", stdout);
+
+			string s;
+			getline(std::cin, s);
+			stringstream ss(s);
+			int n; ss >> n;
+			vqi a(n);
+			for (int i = 0; i < n; i++) {
+				string s;
+				getline(std::cin, s);
+				stringstream iss(s);
+				int x;
+				while (iss >> x) {
+					a[i].push(x);
+					//cout << x << ' ';
+				}
+				//cout << "Line";
+			}
+			//cout << 12 << endl;
+			while (true) {
+				bool f = 0;
+				for (int i = 0; i < n; i++) {
+					if (a[i].sz > 0) {
+						f = 1;
+						if (a[a[i].front() - 1].front() == i + 1) { 
+							cout << min(i + 1, a[i].front()) << ' ' << max(i + 1, a[i].front()) << endl;
+							a[a[i].front() - 1].pop();
+							a[i].pop();
+							i--;
+						}
+					}
+				}
+				if (!f)break;
 			}
 		}
 	}
@@ -1311,7 +1320,7 @@ signed main()
 {
 	//int t = xin();
 	int t = 1;
-	while (t--)MitsaPrepare::Week2::solve4();
+	while (t--)MitsaPrepare::Week2::solve3();
 }
 
 //  <========== NEARTOMORW ==========>
