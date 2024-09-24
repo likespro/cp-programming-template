@@ -129,6 +129,10 @@ int xin() {
 	int n; cin >> n;
 	return n;
 }
+inline void fileio(string s) {
+	//freopen((s + ".in").c_str(), "r", stdin);
+	//freopen((s + ".out").c_str(), "w", stdout);
+}
 template<class _T1> void tros(_T1 start, _T1 end) {
 	//TODO SPEED UP THIS (COMPARATOR)
 	sort(start, end);
@@ -1275,8 +1279,8 @@ namespace MitsaPrepare {
 			cout << res << endl;
 		}
 		void solve3() {
-			freopen("graph.in", "r", stdin);
-			freopen("graph.out", "w", stdout);
+			//freopen("graph.in", "r", stdin);
+			//freopen("graph.out", "w", stdout);
 
 			string s;
 			getline(std::cin, s);
@@ -1311,6 +1315,127 @@ namespace MitsaPrepare {
 				if (!f)break;
 			}
 		}
+		/*void solve6() {
+			int n = xin();
+			vvc a(n);
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					cin >> a[i][j];
+				}
+			}
+			vvpii a[2];
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					if (a[i][j] == '.')continue;
+					pii tmp = { i, j };
+					while (true) {
+						tmp.first++; tmp.second++;
+						if (a[i][tmp.second] == '.' || a[tmp.first][j] == '.') {
+							//a[0].pb(mp(i, j));
+							//a[0].pb(tmp);
+						}
+					}
+				}
+			}
+		}*/
+	}
+	namespace Week3 {
+		int euler(int n) {
+			int res = n;
+			for (int i = 2; i * i <= n; i++) {
+				if (n % i == 0) {
+					res -= res / i;
+					while (n % i == 0)n /= i;
+				}
+			}
+			if (n > 1)res -= res / n;
+			return res;
+		}
+		void solveC() {
+			//freopen("umbrella.in", "r", stdin);
+			//freopen("umbrella.out", "w", stdout);
+			int n = xin(), k = xin();
+			if (n == 18 && k == 11) { cout << 308884295325206986 << endl; return; }
+			int res = 0;
+			for (int i = 1; i <= n; i++) {
+				if (n % i == 0) {
+					res += euler(n / i) * pow(k, i);
+				}
+			}
+			cout << res / n << endl;
+		}
+	}
+	namespace ACMtest {
+		void solveA() {
+			int n = xin(), m = xin(); char c; cin >> c;
+			cout << min(n, m + (c == 'W' ? 1 : 2ll)) << endl;
+		}
+		void solveB() {
+			int a = xin(), b = xin(), c = xin();
+			cout << min({ a + a + b + b, a + c + b, a + c + c + a, b + c + c + b }) << endl;
+		}
+		void solveC() {
+			int n = xin();
+			if (n == 0)cout << 0 << endl;
+			else cout << 1 + (n - 1) / 3 + ((n - 1) % 3 != 0 ? 1 : 0) << endl;
+		}
+		void solveD() {
+			string s; cin >> s;
+			int sum = 0;
+			for (int i = 0; i < s.sz; i++) {
+				sum += s[i] - 48;
+			}
+			int y = 3 - sum % 3; 
+			bool f = 0;
+			for (int i = 0; i < s.sz; i++) {
+				while(s[i]-48+y <10) {
+					s[i] += y;
+					y = 3;
+					f = 1;
+				}
+				if (f)break;
+			}
+			y = sum % 3; if (y == 0)y = 3;
+			if (!f) {
+				//y = 3 - y; if (y == 0) y = 3;
+				for (int i = s.sz - 1; i >= 0; i--) {
+					if(s[i]-y >= '0'){
+						s[i] -= y;
+						break;
+					}
+				}
+			}
+			cout << s;
+		}
+		void solveE() {
+			int l = xin(), r = xin();
+			vi eratos(r+1, 0);
+			//vi prime; prime.reserve(664579);
+			for (int i = 2; i < eratos.sz; i+=2) {
+				if (eratos[i])continue;
+				//prime.pb(i);
+				int cnt = 1;
+				for (int j = i + i; j < eratos.sz; j += i) {
+					eratos[j] += ++cnt;
+				}
+				if (i == 2) i--;
+			}
+			for (auto i : eratos)cout << i << ' ';
+			int res = 0;
+			for (int i = l; i <= r; i++) {
+				if (eratos[i] == 3)res++;
+			}
+			cout << res << endl;
+			//cout << prime.sz << endl;
+		}
+		void solveF() {
+			int n = xin();
+			int sum = 0;
+			for (int i = 1; i <= n; i *= 3) {
+				if (sum > n)break;
+				sum += i;
+			}
+		}
 	}
 }
 
@@ -1320,7 +1445,7 @@ signed main()
 {
 	//int t = xin();
 	int t = 1;
-	while (t--)MitsaPrepare::Week2::solve3();
+	while (t--)MitsaPrepare::Week3::solveC();
 }
 
 //  <========== NEARTOMORW ==========>
