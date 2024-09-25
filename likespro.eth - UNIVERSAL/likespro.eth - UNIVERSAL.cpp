@@ -1436,6 +1436,38 @@ namespace MitsaPrepare {
 				sum += i;
 			}
 		}
+		void solveG() {
+			int n = xin();
+			vpii s(n);
+			for (int i = 0; i < n; i++) {
+				int x = xin(); int sum = 0;
+				vpii y(x);
+				for (int j = 0; j < x; j++) {
+					cin >> y[j].first;
+					cin >> y[j].second;
+					if (j > 0) {
+						sum += y[j - 1].first * y[j].second;
+						sum -= y[j - 1].second * y[j].first;
+					}
+				}
+				for (int j = x - 1; j >= 0; j--) {
+					/*if (j < x - 1) {
+						sum += y[j + 1].first * y[j].second;
+						sum -= y[j + 1].second * y[j].first;
+					}*/
+				}
+				//cout << sum << endl;
+				sum /= 2;
+				sum = abs(sum);
+				s[i] = { sum, i };
+			}
+			sort(all(s));
+			vi res(n);
+			for (int i = 0; i < n; i++) {
+				res[s[i].second] = i + 1;
+			}
+			for (auto i : res)cout << i-1 << ' ';
+		}
 	}
 }
 
@@ -1445,7 +1477,7 @@ signed main()
 {
 	//int t = xin();
 	int t = 1;
-	while (t--)MitsaPrepare::Week3::solveC();
+	while (t--)MitsaPrepare::ACMtest::solveG();
 }
 
 //  <========== NEARTOMORW ==========>
