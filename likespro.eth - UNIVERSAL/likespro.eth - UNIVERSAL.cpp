@@ -97,9 +97,11 @@ using vvi = vector<vi>;
 using vb = vector<bool>;
 using vvb = vector<vb>;
 using pii = pair<int, int>;
+using pdi = pair<double, int>;
 using pipii = pair<int, pii>;
 using tiii = Trip<int, int, int> ;
 using vpii = vector < pii > ;
+using vpdi = vector < pdi >;
 using vpipii = vector < pipii >;
 using vvpii = vector < vpii >;
 using vc = vector<char>;
@@ -1438,9 +1440,9 @@ namespace MitsaPrepare {
 		}
 		void solveG() {
 			int n = xin();
-			vpii s(n);
+			vpdi s(n);
 			for (int i = 0; i < n; i++) {
-				int x = xin(); int sum = 0;
+				int x = xin(); double sum = 0;
 				vpii y(x);
 				for (int j = 0; j < x; j++) {
 					cin >> y[j].first;
@@ -1448,17 +1450,15 @@ namespace MitsaPrepare {
 					if (j > 0) {
 						sum += y[j - 1].first * y[j].second;
 						sum -= y[j - 1].second * y[j].first;
+						//sum += (y[j - 1].first + y[j].first) * (y[j].second - y[j - 1].second);
 					}
 				}
-				for (int j = x - 1; j >= 0; j--) {
-					/*if (j < x - 1) {
-						sum += y[j + 1].first * y[j].second;
-						sum -= y[j + 1].second * y[j].first;
-					}*/
-				}
-				//cout << sum << endl;
+				//sum+= (y[0].first + y[x-1].first) * (y[x-1].second - y[0].second);
+				sum += y[x - 1].first * y[0].second;
+				sum -= y[x - 1].second * y[0].first;
 				sum /= 2;
 				sum = abs(sum);
+				//cout << sum << endl;
 				s[i] = { sum, i };
 			}
 			sort(all(s));
@@ -1466,7 +1466,7 @@ namespace MitsaPrepare {
 			for (int i = 0; i < n; i++) {
 				res[s[i].second] = i + 1;
 			}
-			for (auto i : res)cout << i-1 << ' ';
+			for (auto i : res)cout << n-1-(i-1) << ' ';
 		}
 	}
 }
