@@ -137,10 +137,10 @@ int xin() {
 	int n; cin >> n;
 	return n;
 }
-inline void fileio(string s) {
-	//freopen((s + ".in").c_str(), "r", stdin);
-	//freopen((s + ".out").c_str(), "w", stdout);
-}
+/*inline void fileio(string s) {
+	freopen((s + ".in").c_str(), "r", stdin);
+	freopen((s + ".out").c_str(), "w", stdout);
+}*/
 template<class _T1> void tros(_T1 start, _T1 end) {
 	//TODO SPEED UP THIS (COMPARATOR)
 	sort(start, end);
