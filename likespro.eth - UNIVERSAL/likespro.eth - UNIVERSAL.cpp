@@ -2490,8 +2490,8 @@ namespace MitsaPrepare {
 signed main()
 {
 	srand(time(NULL));
-	bool enabled = true;
-	int t = (enabled ? xin() : 1);
+	bool multiTestEnabled = true;
+	int t = (multiTestEnabled ? xin() : 1);
 	while (t--)CompilerTests::helloWorld();
 }
 
