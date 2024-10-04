@@ -1387,10 +1387,10 @@ namespace MitsaPrepare {
 			for (int i = 0; i < s.sz; i++) {
 				sum += s[i] - 48;
 			}
-			int y = 3 - sum % 3; 
+			int y = 3 - sum % 3;
 			bool f = 0;
 			for (int i = 0; i < s.sz; i++) {
-				while(s[i]-48+y <10) {
+				while (s[i] - 48 + y < 10) {
 					s[i] += y;
 					y = 3;
 					f = 1;
@@ -1401,7 +1401,7 @@ namespace MitsaPrepare {
 			if (!f) {
 				//y = 3 - y; if (y == 0) y = 3;
 				for (int i = s.sz - 1; i >= 0; i--) {
-					if(s[i]-y >= '0'){
+					if (s[i] - y >= '0') {
 						s[i] -= y;
 						break;
 					}
@@ -1411,9 +1411,9 @@ namespace MitsaPrepare {
 		}
 		void solveE() {
 			int l = xin(), r = xin();
-			vi eratos(r+1, 0);
+			vi eratos(r + 1, 0);
 			//vi prime; prime.reserve(664579);
-			for (int i = 2; i < eratos.sz; i+=2) {
+			for (int i = 2; i < eratos.sz; i += 2) {
 				if (eratos[i])continue;
 				//prime.pb(i);
 				int cnt = 1;
@@ -1466,7 +1466,93 @@ namespace MitsaPrepare {
 			for (int i = 0; i < n; i++) {
 				res[s[i].second] = i + 1;
 			}
-			for (auto i : res)cout << n-1-(i-1) << ' ';
+			for (auto i : res)cout << n - 1 - (i - 1) << ' ';
+		}
+		void solveH() {
+			string s;
+			vi expr; //expr.reserve(10001);
+			while (cin >> s) {
+				if (s[0] == '*')expr.pb(-1);
+				else if (s[0] == '+')expr.pb(-2);
+				else expr.pb(stoi(s));
+			}
+			/*for (auto i : expr) {
+				cout << i << ' ';
+			}*/
+			int n = expr.sz;
+			bool f = 1;
+			while (f) {
+				f = 0;
+				int op1i = -3, op2i = -3;
+				for (int i = 0; i < n; i++) {
+					if (expr[i] >= 0) { op1i = op2i; op2i = i; }
+					elif(expr[i] == -1) { expr[op1i] = expr[op1i] * expr[op2i]; expr[i] = -4; expr[op2i] = -4; f = 1; break; }
+					elif(expr[i] == -2) { expr[op1i] = expr[op1i] + expr[op2i]; expr[i] = -4; expr[op2i] = -4; f = 1; break; }
+				}
+				/*for (auto i : expr) {
+					cout << i << ' ';
+				}*/
+			}
+
+			/*for (auto i : expr) {
+				cout << i << ' ';
+			}*/
+			for (auto i : expr) {
+				if (i >= 0) {
+					cout << i << ' ';
+					return;
+				}
+			}
+		}
+		void solveJ() {
+			string s; cin >> s;
+			int k = xin();
+			int y = 0;
+			reverse(all(s));
+			int f = 0, mn = 0;
+			for (int i = 0; i < s.sz; i++) {
+				if (s[i] == '5')y++;
+			}
+			/*if (k == 0) {
+				for (int i = 0; i < s.sz; i++) {
+					if (s[i] != '5' && s[i] < '9') { s[i]++; reverse(all(s)); cout << s << endl; return; }
+				}
+				for (auto& i : s) {
+					if (i != '5')i = '0';
+				}
+				s += '1';
+				reverse(all(s));
+				cout << s << endl;
+				return;
+			}*/
+			if (y == 0)f = 1;
+			for (int i = 0; i < s.sz; i++) {
+				if (k > 0 && s[i]) {
+					if (s[i] > '5') { f = i; mn = s[i]; }
+					elif(s[i] < '5')f = 0;
+					else y--;
+					s[i] = '5';
+					k--;
+				}
+				else break;
+			}
+			for (int i = 0; i < s.sz; i++) {
+				if(k == 0 && f && i>=f && s[i] < '9') {
+					if (s[i] == '5' && y <= 0)continue;
+					if (s[i] == '5')y--;
+					s[i]++;
+					f = 0;
+					break;
+				}
+			}
+			if (f) {
+				for (auto& i : s) {
+					if (i != '5')i = '0';
+				}
+				s += '1';
+			}
+			reverse(all(s));
+			cout << s << endl;
 		}
 	}
 }
@@ -1477,7 +1563,7 @@ signed main()
 {
 	//int t = xin();
 	int t = 1;
-	while (t--)MitsaPrepare::ACMtest::solveG();
+	while (t--)MitsaPrepare::ACMtest::solveJ();
 }
 
 //  <========== NEARTOMORW ==========>
