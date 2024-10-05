@@ -14,7 +14,7 @@ jobs:
     - name: compile with VS 2022
       shell: cmd 
       run: ${{ '"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat" && msbuild' }}
-      working-directory: 'likespro.eth - UNIVERSAL\'
+      working-directory: 'likespro.eth - UNIVERSAL'
     - name: run
       run: |
         'x64\Release\likespro.eth - UNIVERSAL.exe'
