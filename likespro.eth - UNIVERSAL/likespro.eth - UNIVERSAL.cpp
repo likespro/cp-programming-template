@@ -2707,8 +2707,9 @@ namespace MitsaPrepare {
 			}
 		}
 		void solveE() {
-			freopen("cash.in", "r", stdin);
-			freopen("cash.out", "w", stdout);
+			//freopen("cash.in", "r", stdin);
+			//freopen("cash.out", "w", stdout);
+
 			int m = xin(), n = xin(), p = xin(), r = xin();
 			if (r == 0) r = INF;
 			BigIntegerFxs::BigInt res(1);
@@ -2720,6 +2721,47 @@ namespace MitsaPrepare {
 			for (int i = 2; i <= min(m - p - 1, n + p + 1); i++) { c2 /= i; }
 
 			cout << (res - c2)%r << endl;
+		}
+		void solveD() {
+			//freopen("slope.in", "r", stdin);
+			//freopen("slope.out", "w", stdout);
+
+			int n = xin();
+			vpii a(n);
+			for (int i = 0; i < n; i++) {
+				a[i] = { xin(), xin() };
+				svap(a[i].first, a[i].second);
+			}
+			sort(all(a));
+			int first = -1;
+			int second = 0;
+			double mx = -INF;
+			vi res;
+			for (int i = 1; i <= n; i++) {
+				if (i == n || a[i].first != a[i - 1].first) {
+					if (first != -1) {
+						int u = min({ abs(a[first].second - a[second].second), abs(a[first].second - a[i - 1].second) , abs(a[second - 1].second - a[second].second) , abs(a[second - 1].second - a[i - 1].second) });
+						int x1, x2;
+						if (u == abs(a[first].second - a[second].second)) { x1 = a[first].second; x2 = a[second].second; }
+						elif (u == abs(a[first].second - a[i - 1].second)) { x1 = a[first].second; x2 = a[i - 1].second; }
+						elif (u == abs(a[second - 1].second - a[second].second)) { x1 = a[second - 1].second; x2 = a[second].second; }
+						elif (u == abs(a[second - 1].second - a[i - 1].second)) { x1 = a[second - 1].second; x2 = a[i - 1].second; }
+						//cout << u * 1.0 / abs(a[second].first - a[first].first) << endl;
+						if (u * 1.0 / abs(a[second].first - a[first].first) > mx) {
+							mx = u * 1.0 / abs(a[second].first - a[first].first);
+							//cout << "Found " << i <<' '<<mx << endl;
+							res = { x1, a[first].first, x2, a[second].first };
+						}
+					}
+
+					first = second;
+					second = i;
+				}
+			}
+			if (res.sz == 0)cout << 0 << endl;
+			else {
+				cout << res << endl;
+			}
 		}
 	}
 	namespace ACMtest {
@@ -2919,7 +2961,7 @@ signed main()
 	srand(time(NULL));
 	bool multiTestEnabled = false;
 	int t = (multiTestEnabled ? xin() : 1);
-	while (t--)MitsaPrepare::LongWeek3::solveE();
+	while (t--)MitsaPrepare::LongWeek3::solveD();
 }
 
 //  <========== NEARTOMORW ==========>
