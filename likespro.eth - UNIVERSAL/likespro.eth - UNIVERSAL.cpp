@@ -42,7 +42,7 @@
 #include <map>
 #include <numeric>
 #include <queue>
-#include <assert.h>
+#include <cassert>
 #include <string>
 #include <sstream>
 #include <bitset>
@@ -1963,6 +1963,35 @@ namespace MitsaPrepare {
 			cout << res << endl;
 			//cout << prime.sz << endl;
 		}
+		void solveE2() {
+			int a = xin(), b = xin();
+			vi prs; //prs.reserve(b - a);
+			vi div(10000000+5, 0);
+			for (int i = 2; i <= 10000000; i++) {
+				if (div[i] == 0) {
+					div[i] = i;
+					prs.pb(i);
+				}
+				for (int j : prs) {
+					if (j > div[i] || i * j > 10000000)break;
+					//cout << i * j << endl;
+					div[i * j] = j;
+				}
+			}
+			int res = 0;
+			for (int i = a; i <= b; i++) {
+				int y = i;
+				int k = 0;
+				while (y > 1) {
+					y /= div[y];
+					k++;
+				}
+				cout << i << ' ' << k << endl;
+				//if (div[y] == 0) k++;
+				if (k == 3)res++;
+			}
+			cout << res << endl;
+		}
 		void solveF() {
 			int n = xin();
 			int sum = 0;
@@ -2088,6 +2117,365 @@ namespace MitsaPrepare {
 			cout << s << endl;
 		}
 	}
+	namespace PEREMOGABudeUTravni {
+		void solveG() {
+			int n = xin();
+			string s; cin >> s;
+			vi res(n);
+			res[0] = 0;
+			int mn = 0, mx = 0;
+			for (int i = 0; i < n-1; i++) {
+				if (s[i] == '<') { res[i + 1] = ++mx; }
+				else { res[i + 1] = --mn; }
+			}
+			reverse(all(s));
+			vi res1(n);
+			res1[0] = 0;
+			mn = 0, mx = 0;
+			for (int i = 0; i < n - 1; i++) {
+				if (s[i] == '<') { res1[i + 1] = ++mx; }
+				else { res1[i + 1] = --mn; }
+			}
+			for (auto& i : res) {
+				cout << i + (mn < 0 ? -mn : 0) + 1 << ' ';
+			}
+		}
+	}
+	namespace ICPCUkraineStage2 {
+		void solveF() {
+			int n = xin();
+			string s; cin >> s;
+			int k = 0;
+			for (int i = 1; i < n; i++) {
+				if (s[i] != s[i - 1])k++;
+			}
+			int j = n - k + 1;
+			int h = j - 1;
+			bool f = ((j - 1) % 2 == 0 ? 0 : 1);
+			for (itn i = 0; i < n; i++) {
+				if (i > 0 && s[i] != s[i - 1]) {
+					h++;
+					cout << (h % 2 == f ? s[0] : (s[0] == 'L' ? 'R' : 'L')) << ' ' << h << endl;
+				}
+				else {
+					j--;
+					cout << (j % 2 == f ? s[0] : (s[0] == 'L' ? 'R' : 'L')) << ' ' << j << endl;
+				}
+			}
+		}
+	}
+	namespace UOI2011_2012 {
+		void solveB() {
+			string s, s1; cin >> s >> s1;
+			vi pref(s.sz), suff(s.sz);
+
+		}
+	}
+}
+namespace UzhNU_Legal {
+	namespace KR1 {
+		void solve10() {
+			int n = xin(), k = xin();
+			string s; cin >> s;
+			int kon = 0;
+			for (int i = 0; i< n; i++) {
+				if (s[i] == 'G') { kon = i; break; }
+			}
+			for (int i = kon+k; i < n; i+=k) {
+				if (s[i] == '#')break;
+				if (s[i] == 'T') { cout << "yes\n"; return; }
+			}
+			for (int i = kon - k; i >= 0; i-=k) {
+				if (s[i] == '#')break;
+				if (s[i] == 'T') { cout << "yes\n"; return; }
+			}
+			cout << "no\n";
+		}
+		void solve9() {
+			int n = xin();
+			si s;
+			for (int i = 0; i < n; i++) {
+				s.insert(xin());
+			}
+			int m = xin();
+			for (int i = 0; i < m; i++) {
+				s.insert(xin());
+			}
+			for (auto i : s) {
+				cout << i << ' ';
+			}
+		}
+		void solve8() {
+			int n = xin();
+			vi a(n);
+			for (int i = 0; i < n; i++) {
+				a[i] = xin();
+			}
+			int m = xin();
+			vi b(m); si s;
+			for (int i = 0; i < m; i++) {
+				b[i] = xin();
+				s.insert(b[i]);
+			}
+			vi res;
+			for (auto i : a) {
+				if (s.count(i) == 0) res.pb(i);
+			}
+			cout << res.sz << endl;
+			for (auto i : res)cout << i << ' ';
+		}
+		void solve7() {
+			int n = xin();
+			int res = 0;
+			for (int i = 1; i <= n; i++) {
+				if (n-i > 0 && (n - i) % i == 0)res++;
+			}
+			cout << res << endl;
+		}
+		void solve6() {
+			vi a(4);
+			for (int i = 0; i < 4; i++) {
+				a[i] = xin();
+			}
+			sort(all(a));
+			reverse(all(a));
+			vi res;
+			for (int i = 1; i < 4; i++) {
+				res.pb(a[0] - a[i]);
+			}
+			sort(all(res));
+			//reverse(all(res));
+			for (auto i : res)cout << i << ' ';
+		}
+		void solve5() {
+			string s; cin >> s;
+			int n = s.sz;
+			vi a(10, 0);
+			for (auto& i : s) {
+				a[i - '0']++;
+			}
+			int res = 1;
+			for (int i = 2; i <= n; i++)res *= i;
+			res = res / n * (n - a[0]);
+			for (int i = 0; i < 10; i++) if (a[i] > 0) {
+				for(int j = 1; j<=a[i]; j++)res /= j;
+			}
+			cout << res << endl;
+		}
+		void solve4() {
+			itn n = xin();
+			cout << n * 7 << endl;
+		}
+		void solve3() {
+			string s; cin >> s;
+			si se;
+			for (int i = 0; i < s.sz; i++) {
+				if (!se.count(s[i]))s[i] = toupper(s[i]);
+				se.insert(tolower(s[i]));
+			}
+			cout << s;
+		}
+		void solve2() {
+			int n = xin();
+			cout << 8 * (n / 2) + (n % 2)*10 << endl;
+		}
+		void solve1() {
+			unsigned long long n, m; cin >> n >> m;
+			cout << m - n;
+		}
+		void solve_10() {
+			unsigned int n; cin >> n;
+			int res = 0;
+			int u = 0;
+			while (n > 0) {
+				if (n % 2 == 1)u++;
+				else {
+					res = max(res, u);
+					u = 0;
+				}
+				n /= 2;
+			}
+			res = max(res, u);
+			cout << res << endl;
+		}
+		void solve_3() {
+			int n = xin();
+			cout << 7 + (n > 1 ? 7 : 0) + max(n - 2, 0ll) * 9;
+		}
+		void solve_9() {
+			vi a;
+			a.pb(xin());
+			char c;
+			while (cin >> c) {
+				int x = xin();
+				a.pb(x);
+			}
+			sort(all(a));
+			for (int i = 0; i < a.sz; i++) {
+				cout << a[i];
+				if (i < a.sz - 1)cout << '+';
+			}
+		}
+		void solve_8() {
+			int n = xin();
+			int res = 0;
+			int u = 0;
+			for (int i = 0; i < n; i++) {
+				int x = xin();
+				if (x > 0)u++;
+				else {
+					res = max(res, u);
+					u = 0;
+				}
+			}
+			res = max(res, u);
+			cout << res;
+		}
+		void solve_7() {
+			int n = xin();
+			cout << n << ' ';
+			while (n > 1) {
+				if (n % 2 == 0)n /= 2;
+				else n = n * 3 + 1;
+				cout << n << ' ';
+			}
+		}
+		void solve_6() {
+			int n = xin();
+			int sum = 0;
+			int res = 0;
+			for (int i = 1; i <= n; i++) {
+				sum += i;
+				res += (sum % 3 ? 1 : 0);
+			}
+		}
+		void solve_5() {
+			int n = xin(), m = xin(), k = xin();
+			if (n < m)swap(n, m);
+			int res = n / k + m / k + (n % k + m % k) / k;
+			int u = 0;
+			if ((n % k + m % k) / k > 0)u = k-max(n % k, m % k);
+			cout << res << ' ' << u << endl;
+		}
+		void solve_4() {
+
+		}
+	}
+	namespace Lab4 {
+		void solve10(){
+			string s; cin >> s;
+			//if (s == "aaaaaaaaa") { cout << 6 << endl; return; }
+			int res = 0;
+			int i = 1;
+			string cur = ""; cur += s[0];
+			for (; i < s.sz && s[i] == s[i - 1]; i++) { cur += s[i]; }
+			int ednaki = i;
+			/*while (ednaki > 0) {
+				res += ednaki % 2 + 1;
+				ednaki /= 2;
+			}
+			res--; // num always starts with 1 
+			*/
+			/*if (ednaki > 1)res += ednaki / 2 + ednaki % 2 + 1;
+			else res++;*/
+			
+			for (; i < s.sz; i++) {
+				res++;
+				//if (cur.sz > 0 && i + cur.sz <= s.sz)cout << cur << ' ' << s.substr(i, cur.sz) << endl;
+				if (cur.sz > 0 && i + cur.sz <= s.sz && s.substr(i, cur.sz) == cur) {
+					//cout << "Fast forward to " << i + cur.sz << " from " << i << endl;
+					i += cur.sz - 1;
+					cur += cur;
+				}
+				else cur += s[i];
+			}
+			cout << res << endl;
+		}
+		void solve11() {
+			string s; cin >> s;
+			char nxt = 'a';
+			for (int i = 0; i < s.sz; i++) {
+				if (s[i] > nxt)continue;
+				else {
+					s[i] = nxt;
+					//cout << "Found " << nxt << ' ' << i << endl;
+					nxt++;
+				}
+				if (nxt == 'z' + 1)break;
+			}
+			if (nxt == 'z' + 1)cout << s << endl;
+			else cout << "no" << endl;
+		}
+		void solve1() {
+			string s;
+			int pos = 0;
+			int res = 0;
+			while (cin >> s) {
+				if (abs((int)s.sz - ++pos) == 1)res++;
+			}
+			cout << res << endl;
+		}
+		void solve10_att2() {
+			string s; cin >> s;
+			int res = 0;
+			bool f = 0;
+			for (int i = 1; i < s.sz; i++) { 
+				if (s[i] != s[i - 1]) { f = 1; break; }
+			}
+			if (!f) {
+				if (s.sz > 1) cout << s.sz / 2 + s.sz % 2 + 1;
+				else cout << 1;
+			}
+			else {
+				string cur = "";
+				for (int i = 0; i < s.sz; i++) {
+					res++;
+					//if (cur.sz > 0 && i + cur.sz <= s.sz)cout << cur << ' ' << s.substr(i, cur.sz) << endl;
+					if (cur.sz > 0 && i + cur.sz <= s.sz && s.substr(i, cur.sz) == cur) {
+						//cout << "Fast forward to " << i + cur.sz << " from " << i << endl;
+						i += cur.sz - 1;
+						cur += cur;
+					}
+					else cur += s[i];
+				}
+				cout << res << endl;
+			}
+		}
+		void solve14() {
+			string s; cin >> s; // Вводимо строку
+			int* a = new int[256]; // Создаємо масив із кількістю кожного символа
+			for (int i = 0; i < s.size(); i++) { // Пробігаємося по всій строці
+				a[s[i]]++; // Збільшуємо кількість разів, скільки символ уже зустрічався у строці
+				if (a[s[i]] == 1) { // Єслі цей символ зустрічався лиш один раз (тоїсть тепер)
+					s[i] = toupper(s[i]); // Та тоді робимо його великим у результуючій строці
+				}
+			}
+			cout << s << endl; // Виводимо строку з результатом. Оскільки ми модифікували s - вона і буде результатом.
+		}
+		void solve9() {
+			vi a;
+			a.pb(xin());
+			char c;
+			while (cin >> c) {
+				a.pb(xin());
+			}
+			sort(all(a));
+			for (int i = 0; i < a.sz; i++) {
+				cout << a[i];
+				if (i < a.sz - 1)cout << '+';
+			}
+		}
+	}
+	namespace Lab5 {
+		void solve0() {
+			int e; cin >> e;
+			int y = 0;
+			while ((y + 1) / (y + 2) >= e) {
+				y = (y + 1) / (y + 2);
+			}
+			cout << (y + 1) / (y + 2) << endl;
+		}
+	}
 }
 
 //  <========== MULTITSKNG ==========>
@@ -2097,7 +2485,7 @@ signed main()
 	srand(time(NULL));
 	bool multiTestEnabled = false;
 	int t = (multiTestEnabled ? xin() : 1);
-	while (t--)MitsaPrepare::LongWeek3::solveD();
+	while (t--)UzhNU_Legal::Lab4::solve9();
 }
 
 //  <========== NEARTOMORW ==========>
