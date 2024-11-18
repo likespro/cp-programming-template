@@ -1,9 +1,9 @@
 ﻿/*
  *	.__  .__ __                                                 __  .__			░▒▓███████▓▒░░▒▓████████▓▒░▒▓███████▓▒░░▒▓█▓▒░░▒▓█▓▒░
- *	|  | |__|  | __ ____   ___________________  ____      _____/  |_|  |__		       ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
- *	|  | |  |  |/ // __ \ /  ___/\____ \_  __ \/  _ \   _/ __ \   __\  |  \		       ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ 
- *	|  |_|  |    <\  ___/ \___ \ |  |_> >  | \(  <_> )  \  ___/|  | |   Y  \	 ░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░░▒▓████████▓▒░ 
- *	|____/__|__|_ \\___  >____  >|   __/|__|   \____/ /\ \___  >__| |___|  /	░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░             ░▒▓█▓▒░ 
+ *	|  | |__|  | __ ____   ___________________  ____      _____/  |_|  |__		       ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░
+ *	|  | |  |  |/ // __ \ /  ___/\____ \_  __ \/  _ \   _/ __ \   __\  |  \		       ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░
+ *	|  |_|  |    <\  ___/ \___ \ |  |_> >  | \(  <_> )  \  ___/|  | |   Y  \	 ░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░░▒▓████████▓▒░
+ *	|____/__|__|_ \\___  >____  >|   __/|__|   \____/ /\ \___  >__| |___|  /	░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░             ░▒▓█▓▒░
  *	             \/    \/     \/ |__|                 \/     \/          \/		░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░             ░▒▓█▓▒░
  *	                                                                            ░▒▓████████▓▒░▒▓████████▓▒░▒▓████████▓▒░      ░▒▓█▓▒░
 */
@@ -42,10 +42,11 @@
 #include <map>
 #include <numeric>
 #include <queue>
-#include <assert.h>
+#include <cassert>
 #include <string>
 #include <sstream>
 #include <bitset>
+#include <iomanip>
 
 //  <========== NAMESPACES ==========>
 
@@ -58,6 +59,7 @@ using namespace std;
 #define pb push_back
 #define mp make_pair
 #define all(n) (n).begin(), (n).end()
+#define rall(n) (n).rbegin(), (n).rend()
 #define elif else if
 #define flag bool f = 0;
 #define SVap swap /* the most Essential Define from YuriyKap */
@@ -73,6 +75,8 @@ using namespace std;
 #define itn int
 #define for9int for(int 
 #define svap SVap
+#define breakl break
+#define continuel continue
 
 //  <========== APPCONSTNS ==========>
 
@@ -102,8 +106,8 @@ using vvb = vector<vb>;
 using pii = pair<int, int>;
 using pdi = pair<double, int>;
 using pipii = pair<int, pii>;
-using tiii = Trip<int, int, int> ;
-using vpii = vector < pii > ;
+using tiii = Trip<int, int, int>;
+using vpii = vector < pii >;
 using vpdi = vector < pdi >;
 using vpipii = vector < pipii >;
 using vvpii = vector < vpii >;
@@ -121,6 +125,7 @@ using mapsi = map<string, int>;
 using mib = map<int, bool>;
 using mipii = map<int, pii>;
 using mitiii = map<int, tiii>;
+using mpiivpii = map<pii, vpii>;
 using misi = map<int, si>;
 using mivi = map<int, vi>;
 using qi = /* not BenQi */ queue<int>;
@@ -189,7 +194,7 @@ inline namespace Input {
 		while (isdigit(ch = next_char())) { x = x * 10 + (ch - '0'); }
 		return x * sgn;
 	}
-}
+}  // namespace Input
 inline namespace Output {
 	char buf[BUF_SZ];
 	int pos;
@@ -239,7 +244,7 @@ template<class _T1> istream& operator>>(istream& is, vector<_T1>& vec) {
 }
 template<class _T1> ostream& operator<<(ostream& os, vector<_T1>& vec) {
 	for (int i = 0; i < vec.sz; i++) {
-		os << vec[i] <<' ';
+		os << vec[i] << ' ';
 	}
 	return os;
 }
@@ -261,6 +266,8 @@ namespace CompilerTests {
 signed main()
 {
 	srand(time(NULL));
+	ios::sync_with_stdio(false);
+	cin.tie(0); cout.tie(0);
 	bool multiTestEnabled = false;
 	int t = (multiTestEnabled ? xin() : 1);
 	while (t--)CompilerTests::helloWorld();
@@ -269,7 +276,7 @@ signed main()
 //  <========== NEARTOMORW ==========>
 
 /*
- *      /$$    
+ *      /$$
  *    /$$$$$$     /$$   /$$ /$$$$$$$$  /$$$$$$  /$$$$$$$        ^
  *   /$$__  $$   | $$$ | $$| $$_____/ /$$__  $$| $$__  $$      /|\
  *  | $$  \__/   | $$$$| $$| $$      | $$  \ $$| $$  \ $$     / | \
@@ -277,7 +284,7 @@ signed main()
  *   \____  $$   | $$  $$$$| $$__/   | $$__  $$| $$__  $$       |
  *   /$$  \ $$   | $$\  $$$| $$      | $$  | $$| $$  \ $$       |
  *  |  $$$$$$/   | $$ \  $$| $$$$$$$$| $$  | $$| $$  | $$       |
- *   \_  $$_/    |__/  \__/|________/|__/  |__/|__/  |__/       |               
- *     \__/                                           
-			   
+ *   \_  $$_/    |__/  \__/|________/|__/  |__/|__/  |__/       |
+ *     \__/
+
 */
