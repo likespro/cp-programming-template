@@ -18,14 +18,14 @@ jobs:
       working-directory: 'likespro.eth - UNIVERSAL'
     - name: Run
       run: |
-        "likespro.eth - UNIVERSAL\x64\Debug\likespro.eth - UNIVERSAL.exe"
+        "likespro.eth - UNIVERSAL\Debug\likespro.eth - UNIVERSAL.exe"
       shell: cmd
     - name: Upload executable
       uses: actions/upload-artifact@v4
       with:
         name: windows
         path: |
-          "likespro.eth - UNIVERSAL\x64\Debug\likespro.eth - UNIVERSAL.exe"
+          "likespro.eth - UNIVERSAL\Debug\likespro.eth - UNIVERSAL.exe"
   build-mac-and-ubuntu:
     runs-on: ${{matrix.os}}
     strategy:
@@ -46,4 +46,4 @@ jobs:
         with:
           name: ${{matrix.os}}
           path: |
-            "./likespro.eth - UNIVERSAL.o"
+            'likespro.eth - UNIVERSAL.o'
