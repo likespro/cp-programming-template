@@ -48,6 +48,7 @@
 #include <bitset>
 #include <numeric>
 #include <iomanip>
+#include<unordered_map>
 
 //  <========== NAMESPACES ==========>
 
@@ -267,317 +268,8 @@ namespace CompilerTests {
 
 
 
-//  <========== ICPCSTUDNT ==========>
-
-namespace ICPC {
-	namespace Ukraine2024_1stStage {
-		void solveA() {
-			int n = xin();
-			int sum = 0;
-			for (int i = 0; i < n; i++) {
-				string s; cin >> s;
-				int x = xin();
-				if (s == "earn")sum += x;
-				else sum -= x;
-				if (sum < 0) { cout << "debt"; return; }
-			}
-			cout << "chinazes";
-		}
-		void solveH() {
-			int a = xin(), b = xin(), c = xin();
-			cout << a + (a < b ? c : 0);
-		}
-		void solveI() {
-			int n = xin(), m = xin(), k = xin();
-			mapsi ma, mb;
-			set<string> regs;
-			for (int i = 0; i < n; i++) {
-				string a, b, c; cin >> a >> b >> c;
-				regs.insert(b);
-				if (i < m) {
-					if (mb[c] < k) {
-						ma[b]++;
-						mb[c]++;
-					}
-				}
-			}
-			for (auto i : regs) {
-				if (ma[i] == 0) ma[i]++;
-			}
-			int res = 0;
-			for (auto i : ma) {
-				res += i.second;
-			}
-			cout << res << endl;
-		}
-		void solveB() {
-			int n = xin();
-			vi res(n);
-			for (int i = 0; i < n; i++) {
-				int a = xin(), b = xin();
-				res[i] = a + b;
-			}
-			for (auto i : res)cout << i << ' ';
-		}
-		void solveL() {
-			int x1 = xin(), y1 = xin(), x2 = xin(), y2 = xin();
-			if (x1 == x2 && y1 == y2) {
-				if (abs(x1) > 1 && abs(y1) > 1)cout << "NO\n";
-				else cout << "YES\n";
-				return;
-			}
-
-			if (abs(x2) + abs(y2 - y1) > abs(x1))cout << "YES\n";
-			else if (abs(y2) + abs(x2 - x1) > abs(y1))cout << "YES\n";
-			else if (abs(x2) + abs(y2 - y1) == abs(x1) && ((x1 <= 0 && x2 >= 0) || (x2 <= 0 && x1 >= 0) || (y1 <= 0 && y2 >= 0) || (y2 <= 0 && y1 >= 0)))cout << "YES\n";
-			else if (abs(y2) + abs(x2 - x1) > abs(y1) && ((x1 <= 0 && x2 >= 0) || (x2 <= 0 && x1 >= 0) || (y1 <= 0 && y2 >= 0) || (y2 <= 0 && y1 >= 0)))cout << "YES\n";
-			else cout << "NO\n";
-		}
-		void solveK() {
-			int n = xin(), m = xin();
-			vi a(n * m);
-			for (int i = 0; i < n * m; i++) {
-				a[i] = xin();
-			}
-			//cout << (rand() % 2 ? "YES\n" : "NO\n");
-			sort(all(a));
-			for (int u = 0; u < 1000; u++) {
-				bool f = 1;
-				//random_shuffle(all(a));
-				for (int i = 0; i < n; i++) {
-					for (int j = 0; j < m; j++) {
-						if (i > 0 && a[i * m + j] <= a[(i - 1) * m + j]) { f = 0; break; }
-						if (j > 0 && a[i * m + j] <= a[i * m + (j - 1)]) { f = 0; break; }
-					}
-					if (!f)break;
-				}
-				if (f) {
-					cout << "YES\n";
-					for (int i = 0; i < n; i++) {
-						for (int j = 0; j < m; j++) {
-							cout << a[i * m + j] << ' ';
-						}
-						cout << endl;
-					}
-					return;
-				}
-			}
-			cout << "NO\n";
-		}
-	}
-}
-
-//  <========== CODEFORCES ==========>
-
-namespace CodeForces {
-	namespace R987D2 {
-		void solveC() {
-			int n = xin();
-			if (n % 2) {
-				if (n < 27)cout << -1 << endl;
-				else {
-					cout << "1 2 2 3 3 4 4 5 5 1 6 7 7 8 8 9 9 10 10 11 11 12 12 13 13 1 6 ";
-					for (int i = 27; i < n; i+=2)cout << i / 2 + 1 << ' ' << i / 2 + 1 << ' ';
-					cout << endl;
-				}
-			}
-			else {
-				for (int i=0; i < n; i += 2) cout << i / 2 + 1 << ' ' << i / 2 + 1 << ' ';
-				cout << endl;
-			}
-		}
-	}
-	namespace R799D4 {
-		void solveH() {
-			int n = xin();
-			vian;
-			for (int i = 0; i < n; i++)a[i] = xin();
-			mitiii m;
-			tiii res = { 0, 0, 0 }; int num = 0;
-			for (int i = 0; i < n; i++) {
-				if (!m.count(a[i]) || i - m[a[i]].third - 1 >= m[a[i]].first) m[a[i]] = { 1, i, i };
-				else {
-					m[a[i]].first = m[a[i]].first - (i - m[a[i]].third - 1) + 1;
-					m[a[i]].third = i;
-				}
-				if (res.first < m[a[i]].first) {
-					res = m[a[i]];
-					num = a[i];
-				}
-			}
-			cout << num << ' ' << res.second+1 << ' ' << res.third+1 << endl;
-			//cout << res.first << endl;
-		}
-	}
-}
-
 //  <========== MITSAPREPR ==========>
 
-namespace MitsaPrepare {
-	namespace Nabor1 {
-		void solve2() {
-			/*freopen("copypast.dat", "r", stdin);
-			freopen("copypast.sol", "w", stdout);*/
-
-			int n = xin();
-			int res = 0;
-			while (n > 1) {
-				flag;
-				for (int u = 2; u * u <= n; u++) {
-					if (n % u == 0) { f = 1; res += u; n /= u; break; }
-				}
-				if (!f) { res += n; n = 1; }
-			}
-			cout << res << endl;
-		}
-		void solve3() {
-			/*freopen("village.in", "r", stdin);
-			freopen("village.out", "w", stdout);*/
-
-			int n = xin();
-			vi a(n, -1);
-			si s;
-			int res = 0;
-			for (int i = 0; i < n; i++) {
-				a[i] = xin() - 1;
-				if (a[a[i]] == i) {
-					s.erase(a[i]);
-					/*cout << i << ' ' << a[i] << endl;*/
-					res += 2;
-				}
-				else s.insert(i);
-			}
-			si y;
-			for (auto i : s) {
-				/*cout << i << ' ';*/
-				if (s.count(a[i]) > 0 && y.count(a[i]) == 0 && y.count(i) == 0) { res++; y.insert(a[i]); y.insert(i); /*cout << "Added with " << a[i] << endl;*/ }
-			}
-			cout << res << endl;
-		}
-		pii dfs(int n, vvi& g, vb& used, int v, spii& blocked) {
-			used[v] = 1;
-			auto res = mp(0, 1);
-			int vtx = 0;
-			for (auto& i : g[v]) {
-				//if (blocked.count({ min(i, v), max(i, v)})) continue;
-				vtx++;
-				if (used[i]) continue;;
-				auto p = dfs(n, g, used, i, blocked);;
-				res.first += p.first;
-				res.second += p.second;
-			}
-			if (true) {
-				/*cout << "Vtx " << v << ": ";
-				for (auto i : g[v])cout << i << ' ';
-				cout << endl;*/
-			}
-			return { res.first + vtx % 2, res.second };
-		}
-		void solve9() {
-			/*freopen("domino.dat", "r", stdin);
-			freopen("domino.sol", "w", stdout);*/
-
-			int m = xin();
-			int n = xin();
-			//mpiivpii g;
-			vvi g(m + 1);
-			spii blocked;
-			for (iont i = 0; i < n; i++) {
-				pii pa = mp(xin(), xin());
-				if (pa.first > pa.second) SVap(pa.first, pa.second);
-				blocked.insert(pa);
-			}
-			for (int i = 0; i <= m; i++) {
-				for (int j = i; j <= m; j++) {
-					if (blocked.count({ i, j }))continue;
-					/*for (int h = 0; h <= m; h++) {
-						if (h != j && !blocked.count({ min(i, h), max(i, h) })) {
-							g[{i, j}].pb({ min(i, h), max(i, h) });
-							g[{min(i, h), max(i, h)}].pb({ i, j });
-						}
-						if (h != i && !blocked.count({ min(h, j), max(h, j) })) {
-							g[{i, j}].pb({ min(h, j), max(h, j) });
-							g[{ min(h, j), max(h, j) }].pb({ i, j });
-						}
-					}*/
-					g[i].pb(j);
-					if (i != j)g[j].pb(i);
-				}
-			}
-			vb used(m + 1, 0);
-			int res = 0;
-			for (int i = 0; i <= m; i++) {
-				if (!used[i]) {
-					auto p = dfs(n, g, used, i, blocked);
-					res += (!p.first ? 1 : (p.first % 2 ? p.second / 2 : p.first / 2));
-					/*for (auto i : used)cout << i << ' ';
-					cout << endl;*/
-				}
-			}
-			cout << res << endl;
-		}
-	}
-	namespace UOI2012_2013 {
-		void solve1() {
-			/*freopen("calendar.dat", "r", stdin);
-			freopen("calendar.sol", "w", stdout);*/
-
-
-			int n = xin(); // Вводимо n
-			vi a(n + 1); // Заводимо вектор, який для каждого елемента із першого масива буде хранити його індекс
-			for (int i = 0; i < n; i++) { // Вводимо масив
-				int x = xin(); // Вводимо нове число
-				a[x] = i; // І у векторі кажемо, шо вот це число x має позицію i
-			}
-			map<int, int>m; // Заводимо мапку, де кожному здвигу (напр. здвиг на 1) буде відповідати кількість елементів, які будуть совпадати при такому здвигу.
-			for (int i = 0; i < n; i++) { // Вводимо другий масив 
-				int x = xin(); // Вводимо нове число
-				int y = (a[x] - i > 0 ? a[x] - i : n + a[x] - i); // Щитаємо на скільки треба здвинути цей елемент у другому масиві, шоб він совпав із елементом у першому масиві. По факту це просто різниця індексів, але дополнітельно ми маємо ще убедитися шо воно не мінусове. В такому випадку просто додаємо n 
-				m[y]++; // Кажемо, шо кількість елементів, які будуть совпадати при здвигу на y, стала на 1 більше
-			}
-			int mx = 0; // Переменна для максимуму
-			for (auto& i : m) { // Пробігаємося по всім елементам мапки. Важно помнити, шо елемент мапки в такому випадку буде парою. first - це ключ (то шо у скобках пишеться, напр. "m[y]" - тут 'y' це ключ), second - це значення
-				mx = max(i.second, mx); // Обновляємо максимум
-			}
-			cout << mx; // Виводимо максимум
-		}
-		void solve2() {
-			/*freopen("mutation.dat", "r", stdin);
-			freopen("mutation.sol", "w", stdout);*/
-
-			int n = xin();
-			vi a(n);
-			mipii m;
-			for (int i = 0; i < n; i++) {
-				a[i] = xin();
-				if (!m.count(a[i]))m[a[i]] = { i, i };
-				else m[a[i]].first = i;
-			}
-			vpii b;
-			for (auto& i : m) {
-				b.pb(i.second);
-			}
-			sort(all(b));
-			int last = -1, res=0;
-			for (auto i : b) {
-				if (i.second > last) { res++; last = i.first; /*cout << "Range " << i.second << ' ' << i.first << endl;*/ }
-			}
-			cout << res-1 << endl;
-		}
-		void solve3() {
-			int n = xin(), m = xin();
-			spii ans;
-			vsi s;
-			for (int i = 0; i < n; i++) {
-				int type = xin();
-				if (type == 1) {
-					int x = xin(), y = xin();
-					ans.insert({ y, x });
-				}
-			}
-		}
-	}
-}
 namespace UzhNU_Legal {
 	namespace KR2 {
 		void solve12() {
@@ -997,188 +689,187 @@ namespace UzhNU_Legal {
 			}
 		}
 	}
-}
-namespace UzhNU_Illegal {
-	namespace NetOI2024 {
-		void solve1Matic() {
-
+	namespace Sprint_1 {
+		void solveA() {
+			int a = xin(), b = xin(), c = xin();
+			cout << a + b - c << endl;
 		}
-		void solve2Rect() {
-			/* TESTS
-
-			**Задача 2 Rect2024 - Тести**
-			```4
-			2 2 3 3``` ↓ 1
-			```1```
-			----------------------------
-			```5
-			1 2 3 4 5``` ↓ 2
-			```0```
-			----------------------------
-			```6
-			4 4 4 4 4 4``` ↓ 3
-			```1```
-			----------------------------
-			```10
-			2 2 2 2 2 3 3 3 3 3``` ↓ 4
-			```3```
-			----------------------------
-			```12
-			3 3 3 3 5 5 5 5 7 7 7 7``` ↓ 5
-			```6```
-			----------------------------
-			```7
-			8 8 8 8 9 10 11``` ↓ 6
-			```1```
-			----------------------------
-			```10
-			6 6 6 7 7 7 7 7 7 7``` ↓ 7
-			```2```
-			----------------------------
-			```5
-			1000000 1000000 999999 999999 999999``` ↓ 8
-			```1```
-
-			*/
-		}
-		void solve3Domino() {
-			int q = xin();
-			while (q--) {
-				mii m;
-				for (int i = 0; i < 4; i++) {
-					string s; cin >> s;
-					m[s[0]]++;
-					m[s[1]]++;
-				}
-				flag;
-				for (auto i : m)if (i.second % 2 == 1) { cout << "N"; f = 1;  break; }
-				if (!f)cout << "Y";
-			}
-
-			/* TESTS
-
-			**Задача 3 Domino2024 - Тести**
-			```1
-			12 23 34 41``` ↓ 1
-			```Y```
-			----------------------------
-			```1
-			11 22 33 44``` ↓ 2
-			```N```
-			----------------------------
-			```1
-			12 34 56 78``` ↓ 3
-			```N```
-			----------------------------
-			```1
-			01 12 20 22``` ↓ 4
-			```Y```
-			----------------------------
-			```1
-			01 12 20 23``` ↓ 5
-			```N```
-			----------------------------
-			```3
-			12 23 34 41
-			12 34 56 78
-			11 12 23 34``` ↓ 6
-			```YNN```
-			----------------------------
-			```1
-			00 00 00 00``` ↓ 7
-			```Y```
-			----------------------------
-			```1
-			12 23 34 45``` ↓ 8
-			```N```
-
-			*/
-		}
-		void solve4Cake() {
-			int n = xin(), m = xin();
-			if (n > m)SVap(n, m);
-			if (n == m)cout << n * m + n + n + (n % 2);
-			else {
-				cout << n * m + (m + (m % n == 0 ? 0 : (n - 1))) * 2 + n % 2;
-			}
-
-			/* TESTS
-
-			**Задача 4 Cake2024 - Тести**
-			```1 1``` ↓ 1
-			```4```
-			----------------------------
-			```1 5``` ↓ 2
-			```16```
-			----------------------------
-			```2 4``` ↓ 3
-			```16```
-			----------------------------
-			```2 5``` ↓ 4
-			```22```
-			----------------------------
-			```3 3``` ↓ 5
-			```16```
-			----------------------------
-			```3 6``` ↓ 6
-			```31```
-			----------------------------
-			```3 9``` ↓ 7
-			```46```
-			----------------------------
-			```3 4``` ↓ 8
-			```25```
-			----------------------------
-			```4 3``` ↓ 9
-			```25```
-			----------------------------
-			```47 74``` ↓ 10 **auto**
-			```3719```
-			----------------------------
-			```52 69``` ↓ 11 **auto**
-			```3828```
-			----------------------------
-			```64 32``` ↓ 12 **auto**
-			```2176```
-			----------------------------
-			```993 132``` ↓ 13 **auto**
-			```133324```
-			----------------------------
-			```1000 1000``` ↓ 14 **auto**
-			```1002000```
-
-			*/
-		}
-		void solve5Cards() {
-			int n = xin();
-			vector<string> a(n);
+		void solveB() {
+			int n = xin(), m = xin(), k = xin();
+			vian;
+			vi b(m);
 			for (int i = 0; i < n; i++) {
-				cin >> a[i];
+				a[i] = xin();
 			}
-			sort(rall(a));
-			for (auto& i : a)cout << i;
+			for (int i = 0; i < m; i++) {
+				b[i] = xin();
+			}
+			sort(all(a));
+			sort(all(b));
+			int i = 0, j = 0;
+			int res = 0;
+			while (i < n && j < m) {
+				if (a[i] - b[j] > k)j++;
+				else if (b[j] - a[i] > k)i++;
+				else {
+					res++;
+					i++; j++;
+				}
+			}
+			cout << res << endl;
+		}
+		void solveC() {
+			char c; cin >> c;
+			int n = xin();
+			int resN = 0;
+			vvc res(n);
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n - i - 1; j++) { res[i].pb(' '); resN++; }
+				for (int j = 0; j < (i + 1) * 2 - 1; j++) { res[i].pb(c); resN++; }
+			}
+			cout << resN << endl;
+			for (auto& i : res) {
+				for (auto j : i)cout << j;
+				cout << endl;
+			}
+		}
+		void solveD() {
+			int n = xin();
+			for (int i = 0; i < n * 2 + 1; i++) {
+				if (i == (n * 2 + 1) / 2)for (int j = 0; j < n * 2 + 1; j++)cout << '*';
+				else {
+					for (int j = 0; j < n; j++)cout << '.';
+					cout << '*';
+					for (int j = 0; j < n; j++)cout << '.';
+				}
+				cout << endl;
+			}
+		}
+		void solveE() {
+			int n = xin();
+			vian;
+			int mn = INF;
+			for (int i = 0; i < n; i++) {
+				a[i] = xin();
+				mn = min(a[i], mn);
+			}
+			for (int i = 0; i < n; i++) {
+				cout << a[i] - mn / 2 << ' ';
+			}
 
+		}
+		void solveF() {
+			int k = xin(), w = xin();
+			via(3), b(3);
+			cin >> a[0] >> b[0] >> a[1] >> b[1] >> a[2] >> b[2];
 
+			int wei = a[0] + a[1] + a[2];
+			int sum = b[0] + b[1] + b[2];
+			if (wei <= w && sum >= k) { retyes; }
 
-			/* TESTS
+			wei = a[0];
+			sum = b[0];
+			if (wei <= w && sum >= k) { retyes; }
 
-			**Задача 5 Cards2024 - Тести**
-			```2 001 100``` ↓ 1
-			```100001```
-			----------------------------
-			```3 100 001 020``` ↓ 2
-			```100020001```
-			----------------------------
-			```4 52 69 132 993``` ↓ 3
-			```9936952132```
-			----------------------------
-			```5 001 100 001 100 001``` ↓ 4
-			```100100001001001```
-			----------------------------
-			```3 1000000000 0999999999 0000000001``` ↓ 5
-			```100000000009999999990000000001```
+			wei = a[1];
+			sum = b[1];
+			if (wei <= w && sum >= k) { retyes; }
 
-			*/
+			wei = a[2];
+			sum = b[2];
+			if (wei <= w && sum >= k) { retyes; }
+
+			wei = a[0] + a[1];
+			sum = b[0] + b[1];
+			if (wei <= w && sum >= k) { retyes; }
+
+			wei = a[0] + a[2];
+			sum = b[0] + b[2];
+			if (wei <= w && sum >= k) { retyes; }
+
+			wei = a[1] + a[2];
+			sum = b[1] + b[2];
+			if (wei <= w && sum >= k) { retyes; }
+
+			retno;
+		}
+		// TODO
+		void solveG() {
+			int x = xin(), z = xin(), k = xin();
+			int cur = 1;
+			int y = 0;
+			while (cur <= 1000'000'000) {
+				if (cur % z == k) { cout << y << endl; return; }
+				cur *= x;
+				y++;
+				if (x == 1)break;
+			}
+			cout << "No Solution\n";
+		}
+		int notDp(int sum, int v, int kLeft, int m) {
+			if (kLeft == 0)return (sum % m == 0 ? sum : -1);
+			cout << sum << ' ' << v << ' ' << kLeft << ' ' << m << endl;
+			int res = -1;
+			//if (6 <= kLeft)res = max(res, notDp(sum + pow(10, v) * 0, v + 1, kLeft - 6, m));
+			if (2 <= kLeft)res = max(res, notDp(sum + pow(10, v) * 1, v + 1, kLeft - 2, m));
+			//if (5 <= kLeft)res = max(res, notDp(sum + pow(10, v) * 2, v + 1, kLeft - 5, m));
+			//if (5 <= kLeft)res = max(res, notDp(sum + pow(10, v) * 3, v + 1, kLeft - 5, m));
+			//if (4 <= kLeft)res = max(res, notDp(sum + pow(10, v) * 4, v + 1, kLeft - 4, m));
+			if (5 <= kLeft)res = max(res, notDp(sum + pow(10, v) * 5, v + 1, kLeft - 5, m));
+			//if (6 <= kLeft)res = max(res, notDp(sum + pow(10, v) * 6, v + 1, kLeft - 6, m));
+			if (4 <= kLeft)res = max(res, notDp(sum + pow(10, v) * 7, v + 1, kLeft - 4, m));
+			if (7 <= kLeft)res = max(res, notDp(sum + pow(10, v) * 8, v + 1, kLeft - 7, m));
+			if (6 <= kLeft)res = max(res, notDp(sum + pow(10, v) * 9, v + 1, kLeft - 6, m));
+			return res;
+		}
+		//
+		void solveH() {
+			int k = xin(), m = xin();
+			cout << notDp(0, 0, k, m) << endl;
+		}
+		tiii diofant(int a, int b) {
+			if (!b) {
+				return { a, 1, 0 };
+			}
+			tiii d = diofant(b, a % b);
+			return { d.first, d.third, d.second - a / b * d.third };
+		}
+		void solveI() {
+			int a = xin(), b = xin();
+			tiii d = diofant(a, b);
+			if (d.first == 1) {
+				int t1 = d.second, t2 = b / d.first;
+				if (t1 == 0) cout << 0 << ' ' << d.third << endl;
+				elif(t1 > 0)cout << t1 - t2 * (t1 / t2) << ' ' << d.third + a / d.first * (t1 / t2) << endl;
+				else cout << t1 - t2 * ((t1 - t2 + 1) / t2) << ' ' << d.third + a / d.first * ((t1 - t2 + 1) / t2) << endl;
+
+			}
+			else cout << "No Solution" << endl;
+		}
+		bool realDp(vi a, map<vi, int>& memo) {
+			if (!a[0] && !a[1] && !a[2])return true;
+			//cout << a[0] << ' ' << a[1] << ' ' << a[2] << endl;
+			sort(all(a));
+			if (memo.count(a)) return memo[a];
+			return memo[a] = !min({
+				(a[0] > 0 ? realDp({a[0] - a[0], a[1] - a[0], a[2]}, memo) : 1),
+				(a[0] > 1 ? realDp({a[0] - a[0] + 1, a[1] - a[0] + 1, a[2]}, memo) : 1),
+				(a[0] > 0 ? realDp({a[0] - a[0], a[1], a[2] - a[0]}, memo) : 1),
+				(a[0] > 1 ? realDp({a[0] - a[0] + 1, a[1], a[2] - a[0] + 1}, memo) : 1),
+				(a[1] > 0 ? realDp({a[0], a[1] - a[1], a[2] - a[1]}, memo) : 1),
+				(a[1] > 1 ? realDp({a[0], a[1] - a[1] + 1, a[2] - a[1] + 1}, memo) : 1),
+				(a[0] > 0 ? realDp({a[0] - a[0], a[1], a[2]}, memo) : 1),
+				(a[1] > 0 ? realDp({a[0], a[1] - a[1], a[2]}, memo) : 1),
+				(a[2] > 0 ? realDp({a[0], a[1], a[2] - a[2]}, memo) : 1),
+				(a[0] > 1 ? realDp({a[0] - a[0] + 1, a[1], a[2]}, memo) : 1),
+				(a[1] > 1 ? realDp({a[0], a[1] - a[1] + 1, a[2]}, memo) : 1),
+				(a[2] > 1 ? realDp({a[0], a[1], a[2] - a[2] + 1}, memo) : 1),
+				});
+		}
+		void solveJ() {
+			vi a(3); for (int i = 0; i < 3; i++)a[i] = xin();
+			map<vi, int> memo;
+			cout << realDp(a, memo) + 1;
 		}
 	}
 }
@@ -1192,7 +883,7 @@ signed main()
 	cin.tie(0); cout.tie(0);
 	bool multiTestEnabled = true;
 	int t = (multiTestEnabled ? xin() : 1);
-	while (t--)CodeForces::R799D4::solveH();
+	while (t--)UzhNU_Legal::Sprint_1::solveJ();
 }
 
 //  <========== NEARTOMORW ==========>
