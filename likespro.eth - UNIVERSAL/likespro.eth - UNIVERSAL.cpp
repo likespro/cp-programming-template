@@ -872,6 +872,133 @@ namespace UzhNU_Legal {
 			cout << realDp(a, memo) + 1;
 		}
 	}
+	namespace UnlimitedExcellence {
+		void solveA() {
+			int n = xin(), t = xin();
+			int res = -1, mi = 0;
+			vian;
+			vibn;
+			for (int i = 0; i < n; i++) {
+				a[i] = xin();
+			}
+			for (int i = 0; i < n; i++) {
+				b[i] = xin();
+			}
+			for (int i = 0; i < n; i++) {
+				if (i + a[i] <= t && b[i] > res) {
+					res = b[i];
+					mi = i;
+				}
+			}
+			cout << (res == -1 ? -1 : mi + 1) <<endl;
+		}
+		void solveB() {
+			int n = xin();
+			vian;
+			int mx = -INF, mx2 = -INF;
+			int mn = INF, mn2 = INF;
+			for (int i = 0; i < n; i++) {
+				a[i] = xin();
+				if (a[i] > mx) {
+					mx2 = mx;
+					mx = a[i];
+				}
+				else if (a[i] > mx2) {
+					mx2 = a[i];
+				}
+
+				if (a[i] < mn) {
+					mn2 = mn;
+					mn = a[i];
+				}
+				else if (a[i] < mn2) {
+					mn2 = a[i];
+				}
+			}
+			cout << max(mx * mx2, (mn == INF ? -INF : mn * mn2)) << endl;
+		}
+		void solveC() {
+			int n = xin();
+			static vi prec(10000001, 0);
+			if (prec[4] == 0) {
+				prec[0] = 2;
+				int res = 26;
+				for (int i = 5; i <= 1000000000; i++) {
+					res += i + i + 1;
+					if (i % 100 == 0)prec[i / 100] = res;
+				}
+			}
+			int res = prec[n/100];
+			for (int i = n/100*100 + 1; i <= n; i++) {
+				res += i + i + 1;
+			}
+			cout << res << endl;
+		}
+		void solveD() {
+			itn n = xin();
+			if (n == 1)cout << 1 << endl;
+			elif (n % 2 == 1)cout << -1 << endl;
+			else {
+				vi res(n, n);
+				int cur = 0;
+				int l = n-1, r = 1;
+				for (int i = 1; i < n; i++) {
+					if (cur > l) res[i] = n - cur + l--;
+					else res[i] = l-- - cur;
+					cur = (cur + res[i]) % n;
+					i++;
+					//cout << cur << ' ';
+
+					if (cur > r) res[i] = n - cur + r++;
+					else res[i] = r++ - cur;
+					cur = (cur + res[i]) % n;
+					//cout << cur << ' ';
+				}
+				//cout << endl;
+				for (auto& i : res)cout << i << ' ';
+				cout << endl;
+			}
+			// 6 5 2 3 4 1
+			// 0 5 1 4 2 3
+
+			// 8 7 2 5 4 3 6 1
+			// 0 7 1 6 2 5 3 4
+		}
+		void solveE() {
+			int n = xin();
+			string s; cin >> s;
+			if (n % 2 == 1) { cout << -1 << endl; return; }
+
+			map<char, int>m, pal;
+			int avlbl = n;
+			for (int i = 0; i < n; i++) {
+				m[s[i]]++;
+				if (m[s[i]] > n / 2) { cout << -1 << endl; return; }
+				if (i < n / 2 && s[i] == s[n - i - 1]) {
+					pal[s[i]]++;
+					avlbl--;
+				}
+			}
+			vi srt;
+			for (auto& i : pal) {
+				srt.pb(i.second);
+			}
+			sort(rall(srt));
+			int res = 0;
+			for (int i = 0; i < srt.sz; i++) {
+				int j = i + 1;
+				while (j < srt.sz && srt[i] > 0) {
+					int u = min(srt[i], srt[j]);
+					srt[i] -= u;
+					srt[j] -= u;
+					res+=u;
+					j++;
+				}
+				res += srt[i]; srt[i] = 0;
+			}
+			cout << res << endl;
+		}
+	}
 }
 
 //  <========== MULTITSKNG ==========>
@@ -883,7 +1010,7 @@ signed main()
 	cin.tie(0); cout.tie(0);
 	bool multiTestEnabled = true;
 	int t = (multiTestEnabled ? xin() : 1);
-	while (t--)UzhNU_Legal::Sprint_1::solveJ();
+	while (t--)UzhNU_Legal::UnlimitedExcellence::solveE();
 }
 
 //  <========== NEARTOMORW ==========>
