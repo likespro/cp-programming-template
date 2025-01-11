@@ -1066,6 +1066,7 @@ namespace MukachevoCamp2025 {
 			mii m;
 			int res = 0;
 			for (auto to : g[v]) {
+				if (used[to.first])continue;
 				usedTmp = vb(n + 1, 0);
 				res += gen_res(n, g, to.first, usedTmp, used, m, 1, k);
 
