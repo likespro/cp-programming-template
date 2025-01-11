@@ -1005,12 +1005,12 @@ namespace UzhNU_Legal {
 
 namespace MukachevoCamp2025 {
 	namespace Day1 {
-		int calc_sz(vvpii& g, int v, vb& used, vi& szs) {
+		int calc_sz(vvpii& g, int v, vb& used, vi& szs, vb& del) {
 			used[v] = true;
 			int res = 1;
 			for (auto to : g[v]) {
-				if(!used[to.first]){
-					res += calc_sz(g, to.first, used, szs);
+				if(!used[to.first] && !del[to.first]){
+					res += calc_sz(g, to.first, used, szs, del);
 				}
 			}
 			return szs[v] = res;
@@ -1019,7 +1019,7 @@ namespace MukachevoCamp2025 {
 			used[v] = true;
 			for (auto to : g[v]) {
 				//cout << "WO" << ' ' << v<<' '<<to.first << endl;
-				if(!used[to.first])if (szs[to.first] > n / 2) return find_center(n, g, to.first, used, del, szs);
+				if(!used[to.first] && !del[to.first])if (szs[to.first] > n / 2) return find_center(n, g, to.first, used, del, szs);
 			}
 			return v;
 		}
@@ -1035,7 +1035,7 @@ namespace MukachevoCamp2025 {
 			vb used(n + 1, 0);
 			vb del(n + 1, 0);
 			vi szs(n + 1, 0);
-			calc_sz(g, 1, used, szs);
+			calc_sz(g, 1, used, szs, del);
 			used = vb(n + 1, 0);
 			//cout << "HERE" << endl;
 			cout << find_center(n, g, 1, used, del, szs);
@@ -1044,30 +1044,46 @@ namespace MukachevoCamp2025 {
 			used[v] = true;
 			m[v] = deep;
 			for (auto to : g[v]) {
-				if (!used[to.first]) set_m(n, g, to.first, used, del, m, deep + 1);
+				if (!used[to.first] && !del[to.first]) set_m(n, g, to.first, used, del, m, deep + 1);
 			}
 		}
 		int gen_res(int n, vvpii& g, int v, vb& used, vb& del, mii& m, int deep, int k) {
 			used[v] = true;
+			int res = 0;
 			for (auto to : g[v]) {
-				if (!used[to.first]) set_m(n, g, to.first, used, del, m, deep + 1);
+				if (!used[to.first] && !del[to.first]) res+=gen_res(n, g, to.first, used, del, m, deep + 1, k);
 			}
-			return m[k - deep];
+			return m[k - deep]+res;
 		}
-		void dfsB(int n, vvpii& g, int v, vb& used, vb& del, int k) {
+		int dfsB(int n, vvpii& g, int v, vb& used, int k) {
+			used[v] = true;
+			//cout << 1 << endl;
+
 			vi szs(n + 1, 0);
 			vb usedTmp(n + 1, 0);
-			calc_sz(g, v, usedTmp, szs);
+			calc_sz(g, v, usedTmp, szs, used);
 
 			mii m;
 			int res = 0;
 			for (auto to : g[v]) {
 				usedTmp = vb(n + 1, 0);
-				res += gen_res(n, g, to.first, usedTmp, del, m, 1, k);
+				res += gen_res(n, g, to.first, usedTmp, used, m, 1, k);
 
 				usedTmp = vb(n + 1, 0);
-				set_m(n, g, to.first, usedTmp, del, m, 1);
+				set_m(n, g, to.first, usedTmp, used, m, 1);
 			}
+			for (auto to : g[v]) {
+				if (used[to.first])continue;
+				vi tmpSzs(n + 1, 0);
+				usedTmp = vb(n + 1, 0);
+				calc_sz(g, v, usedTmp, tmpSzs, used);
+
+				//cout << used[v] << " used"<<' '<<v << endl;
+				int center = find_center(n, g, to.first, usedTmp, used, szs);
+				res += dfsB(n, g, center, used, k);
+			}
+			res += m[k];
+			return res;
 		}
 		void solveB() {
 			int n = xin(), k = xin();
@@ -1079,10 +1095,7 @@ namespace MukachevoCamp2025 {
 			}
 			//cout << "HERE" << endl;
 			vb used(n + 1, 0);
-			vb del(n + 1, 0);
-			vi szs(n + 1, 0);
-			calc_sz(g, 1, used, szs);
-			used = vb(n + 1, 0);
+			cout << dfsB(n, g, 1, used, k);
 		}
 	}
 }
@@ -1096,7 +1109,7 @@ signed main()
 	cin.tie(0); cout.tie(0);
 	bool multiTestEnabled = false;
 	int t = (multiTestEnabled ? xin() : 1);
-	while (t--)MukachevoCamp2025::Day1::solveA();
+	while (t--)MukachevoCamp2025::Day1::solveB();
 }
 
 //  <========== NEARTOMORW ==========>
