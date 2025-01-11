@@ -1001,6 +1001,92 @@ namespace UzhNU_Legal {
 	}
 }
 
+//  <========== MITSAPREPR ==========>
+
+namespace MukachevoCamp2025 {
+	namespace Day1 {
+		int calc_sz(vvpii& g, int v, vb& used, vi& szs) {
+			used[v] = true;
+			int res = 1;
+			for (auto to : g[v]) {
+				if(!used[to.first]){
+					res += calc_sz(g, to.first, used, szs);
+				}
+			}
+			return szs[v] = res;
+		}
+		int find_center(int n, vvpii& g, int v, vb& used, vb& del, vi& szs) {
+			used[v] = true;
+			for (auto to : g[v]) {
+				//cout << "WO" << ' ' << v<<' '<<to.first << endl;
+				if(!used[to.first])if (szs[to.first] > n / 2) return find_center(n, g, to.first, used, del, szs);
+			}
+			return v;
+		}
+		void solveA() {
+			int n = xin();
+			vvpii g(n + 1);
+			for (int i = 0; i < n-1; i++) {
+				int a = xin(), b = xin();
+				g[a].pb({ b, 1 });
+				g[b].pb({ a, 1 });
+			}
+			//cout << "HERE" << endl;
+			vb used(n + 1, 0);
+			vb del(n + 1, 0);
+			vi szs(n + 1, 0);
+			calc_sz(g, 1, used, szs);
+			used = vb(n + 1, 0);
+			//cout << "HERE" << endl;
+			cout << find_center(n, g, 1, used, del, szs);
+		}
+		void set_m(int n, vvpii& g, int v, vb& used, vb& del, mii& m, int deep) {
+			used[v] = true;
+			m[v] = deep;
+			for (auto to : g[v]) {
+				if (!used[to.first]) set_m(n, g, to.first, used, del, m, deep + 1);
+			}
+		}
+		int gen_res(int n, vvpii& g, int v, vb& used, vb& del, mii& m, int deep, int k) {
+			used[v] = true;
+			for (auto to : g[v]) {
+				if (!used[to.first]) set_m(n, g, to.first, used, del, m, deep + 1);
+			}
+			return m[k - deep];
+		}
+		void dfsB(int n, vvpii& g, int v, vb& used, vb& del, int k) {
+			vi szs(n + 1, 0);
+			vb usedTmp(n + 1, 0);
+			calc_sz(g, v, usedTmp, szs);
+
+			mii m;
+			int res = 0;
+			for (auto to : g[v]) {
+				usedTmp = vb(n + 1, 0);
+				res += gen_res(n, g, to.first, usedTmp, del, m, 1, k);
+
+				usedTmp = vb(n + 1, 0);
+				set_m(n, g, to.first, usedTmp, del, m, 1);
+			}
+		}
+		void solveB() {
+			int n = xin(), k = xin();
+			vvpii g(n + 1);
+			for (int i = 0; i < n - 1; i++) {
+				int a = xin(), b = xin();
+				g[a].pb({ b, 1 });
+				g[b].pb({ a, 1 });
+			}
+			//cout << "HERE" << endl;
+			vb used(n + 1, 0);
+			vb del(n + 1, 0);
+			vi szs(n + 1, 0);
+			calc_sz(g, 1, used, szs);
+			used = vb(n + 1, 0);
+		}
+	}
+}
+
 //  <========== MULTITSKNG ==========>
 
 signed main()
@@ -1008,9 +1094,9 @@ signed main()
 	srand(time(NULL));
 	ios::sync_with_stdio(false);
 	cin.tie(0); cout.tie(0);
-	bool multiTestEnabled = true;
+	bool multiTestEnabled = false;
 	int t = (multiTestEnabled ? xin() : 1);
-	while (t--)UzhNU_Legal::UnlimitedExcellence::solveE();
+	while (t--)MukachevoCamp2025::Day1::solveA();
 }
 
 //  <========== NEARTOMORW ==========>
