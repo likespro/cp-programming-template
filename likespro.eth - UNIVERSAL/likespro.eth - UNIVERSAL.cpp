@@ -1019,7 +1019,7 @@ namespace MukachevoCamp2025 {
 			used[v] = true;
 			for (auto to : g[v]) {
 				//cout << "WO" << ' ' << v<<' '<<to.first << endl;
-				if(!used[to.first] && !del[to.first])if (szs[to.first] > n / 2) return find_center(n, g, to.first, used, del, szs);
+				if(!used[to.first] && !del[to.first]) if (szs[to.first] > n / 2) return find_center(n, g, to.first, used, del, szs);
 			}
 			return v;
 		}
@@ -1079,7 +1079,7 @@ namespace MukachevoCamp2025 {
 				calc_sz(g, v, usedTmp, tmpSzs, used);
 
 				cout << used[v] << " used"<<' '<<v << endl;
-				int center = find_center(n, g, to.first, usedTmp, used, szs);
+				int center = find_center(n, g, to.first, usedTmp, used, tmpSzs);
 				res += dfsB(n, g, center, used, k);
 			}
 			res += m[k];
