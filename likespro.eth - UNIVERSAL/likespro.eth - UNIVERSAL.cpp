@@ -1042,18 +1042,19 @@ namespace MukachevoCamp2025 {
 		}
 		void set_m(int n, vvpii& g, int v, vb& used, vb& del, mii& m, int deep) {
 			used[v] = true;
-			m[v] = deep;
+			m[deep]++;
 			for (auto to : g[v]) {
 				if (!used[to.first] && !del[to.first]) set_m(n, g, to.first, used, del, m, deep + 1);
 			}
 		}
 		int gen_res(int n, vvpii& g, int v, vb& used, vb& del, mii& m, int deep, int k) {
 			used[v] = true;
-			int res = 0;
+			int res = m[k - deep];
+			//if (res > 0)cout << "GE " << v << ' ' << deep << endl;
 			for (auto to : g[v]) {
 				if (!used[to.first] && !del[to.first]) res+=gen_res(n, g, to.first, used, del, m, deep + 1, k);
 			}
-			return m[k - deep]+res;
+			return res;
 		}
 		int dfsB(int n, vvpii& g, int v, vb& used, int k) {
 			used[v] = true;
@@ -1070,17 +1071,14 @@ namespace MukachevoCamp2025 {
 				usedTmp = vb(n + 1, 0);
 				res += gen_res(n, g, to.first, usedTmp, used, m, 1, k);
 
+				//cout << used[v] << " used" << ' ' << v << endl;
 				usedTmp = vb(n + 1, 0);
 				set_m(n, g, to.first, usedTmp, used, m, 1);
 			}
 			for (auto to : g[v]) {
 				if (used[to.first])continue;
-				vi tmpSzs(n + 1, 0);
-				usedTmp = vb(n + 1, 0);
-				calc_sz(g, to.first, usedTmp, tmpSzs, used);
 
-				//cout << used[v] << " used"<<' '<<v << endl;
-				int center = find_center(n, g, to.first, usedTmp, used, tmpSzs);
+				int center = find_center(n, g, to.first, usedTmp, used, szs);
 				res += dfsB(n, g, center, used, k);
 			}
 			res += m[k];
