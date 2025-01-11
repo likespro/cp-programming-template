@@ -1057,7 +1057,7 @@ namespace MukachevoCamp2025 {
 		}
 		int dfsB(int n, vvpii& g, int v, vb& used, int k) {
 			used[v] = true;
-			//cout << 1 << endl;
+			cout << 1 << endl;
 
 			vi szs(n + 1, 0);
 			vb usedTmp(n + 1, 0);
@@ -1078,7 +1078,7 @@ namespace MukachevoCamp2025 {
 				usedTmp = vb(n + 1, 0);
 				calc_sz(g, v, usedTmp, tmpSzs, used);
 
-				//cout << used[v] << " used"<<' '<<v << endl;
+				cout << used[v] << " used"<<' '<<v << endl;
 				int center = find_center(n, g, to.first, usedTmp, used, szs);
 				res += dfsB(n, g, center, used, k);
 			}
