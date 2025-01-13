@@ -48,7 +48,8 @@
 #include <bitset>
 #include <numeric>
 #include <iomanip>
-#include<unordered_map>
+#include <unordered_map>
+#include <random>
 
 //  <========== NAMESPACES ==========>
 
@@ -1097,18 +1098,191 @@ namespace MukachevoCamp2025 {
 			cout << dfsB(n, g, 1, used, k);
 		}
 	}
+	namespace Day3 {
+		void solveA() {
+			int n = xin(), g = xin();
+			vian;
+			for (int i = 0; i < n; i++) {
+				a[i] = xin();
+			}
+			si s;
+			mt19937 rng(228);
+			for (int i = 0; i < 30; i++) {
+				int b = a[uniform_int_distribution<int>(0, n - 1)(rng)];
+				int c = a[uniform_int_distribution<int>(0, n - 1)(rng)];
+				// cout << b << ' ' << c << endl;
+				int dist = c - b;
+				for (int i = 2; i * i <= dist && dist > 0; i++) {
+					while (dist > 0 && dist % i == 0) {
+						s.insert(i);
+						dist = dist / i;
+					}
+				}
+				if (dist > 1) s.insert(dist);
+			}
+			/*for (auto i : s) {
+				cout << i << ' ';
+			}
+			cout << endl;*/
+			int mx = n / 2 + n % 2;
+			for (auto j : s) {
+				mii m;
+				for (int i = 0; i < n; i++) {
+					m[a[i] % j]++;
+					mx = max(mx, m[a[i] % j]);
+				}
+			}
+			cout << mx << endl;
+		}
+		void solveE() {
+			int k = xin(), n = xin();
+			while (k--) {
+				int mx = 0;
+				for (int i = 0; i < n; i++) {
+					int x = xin();
+					if (i < n / 2) {
+						cout << 0 << endl;
+						mx = max(mx, x);
+					}
+					else if (x > mx || i == n-1) {
+						cout << 1 << endl;
+						break;
+					}
+					else {
+						cout << 0 << endl;
+					}
+				}
+			}
+		}
+		int genLongSafely(mt19937& rng, int l, itn r) {
+			return uniform_int_distribution<int32_t>((int32_t) l, (int32_t) r)(rng);
+		}
+		void solveF() {
+			int n = xin();
+			int l = 1, r = 1000000000;
+			int queriesLeft = 60;
+			while (l < r) {
+				int mid = (l + r) / 2;
+				cout << "> " << mid << endl;//<<' '<<l<<' '<<r << endl;
+				queriesLeft--;
+				int responsE = xin();
+				if (responsE == 0) r = mid;
+				else l = mid + 1;
+			}
+			int mx = l;
+
+			/*l = 0, r = 1000000000 + 1;
+			while (r - l > 1) {
+				if (r - l == 2) { l++; break; }
+				int mid = (l + r) / 2;
+				cout << "> " << mid << ' ' << l << ' ' << r << endl;
+				int responsE = xin();
+				if (responsE == 1) r = mid + 1;
+				else l = mid;
+			}*/
+			mt19937 rng(8841);
+			si s;
+			// queriesLeft = 5;
+			while (queriesLeft--) {
+				int b = uniform_int_distribution<int>(0, n - 1)(rng) + 1;
+				cout << "? " << b << endl; int bb = xin();
+				s.insert(bb);
+			}
+			int last = -1, d = INT_MAX;
+			if (s.sz == 1) { d = 0; }
+			for (auto i : s) {
+				if (last != -1) {
+					d = d == INT_MAX ? i - last : gcd(d, i - last);
+				}
+				last = i;
+			}
+			cout << "! " << mx - d * (n - 1) << ' ' << d << endl;
+			/*while (true) {
+				int b = genLongSafely(rng, 1, n);
+				int c = genLongSafely(rng, 1, n);
+				int d = genLongSafely(rng, 1, n);
+				cout << "? " << b << endl; int bb = xin();
+				cout << "? " << c << endl; int cc = xin();
+				cout << "? " << d << endl; int dd = xin();
+				vi tmp = { b, c, d }; sort(all(tmp));
+				int dist = tmp[2] - tmp[0];
+				while (dist > 0) {
+
+				}
+				if ((tmp[2] - tmp[1]) % dist == 0
+					&& (mx - tmp[2]) % dist == 0
+					&& (mx - tmp[1]) % dist == 0) {
+					cout << "! " << mx-dist*(n-1) << ' ' << dist << endl;
+					break;
+				}
+			}*/
+		}
+		void solveH() {
+			vi a = { 4
+ , 8
+, 15
+, 16
+, 23
+, 42 };
+			map<int, pii>m;
+			for (int i = 0; i < a.sz; i++) {
+				for (int j = i + 1; j < a.sz; j++) {
+					m[a[i] * a[j]] = { i, j };
+				}
+			}
+			/*vi res(5, -1);
+			cout << "? 1 2" << endl; auto x = m[xin()];
+			res[0] = a[x.first]; res[1] = a[x.second];
+			cout << "? 1 1" << endl; x = m[xin()];
+			if (a[x.first] != res[0]) swap(res[0], res[1]);
+
+			cout << "? 3 4" << endl; x = m[xin()];
+			res[2] = a[x.first]; res[3] = a[x.second]; 
+			cout << "? 4 5" << endl; x = m[xin()];
+			if (a[x.first] != res[3] && a[x.second] != res[3]) swap(res[2], res[3]);
+			if (a[x.first] == res[3]) res[4] = a[x.second]; else res[4] = a[x.first];
+
+			cout << "! ";
+			for (auto i : res) {
+				cout << i << ' ';
+				s.erase(i);
+			}
+			cout << *s.begin() << endl;*/
+			vi res(6, -1);
+			cout << "? 1 2" << endl; auto x = m[xin()];
+			res[0] = x.first; res[1] = x.second;
+			cout << "? 2 3" << endl; x = m[xin()];
+			if (res[1] != x.first && res[1] != x.second) swap(res[0], res[1]);
+			if (x.first == res[1]) res[2] = x.second; else res[2] = x.first;
+
+			cout << "? 4 5" << endl; x = m[xin()];
+			res[3] = x.first; res[4] = x.second;
+			cout << "? 5 6" << endl; x = m[xin()];
+			if (res[4] != x.first && res[4] != x.second) swap(res[3], res[4]);
+			if (x.first == res[4]) res[5] = x.second; else res[5] = x.first;
+
+			cout << "! "; // 4 16 8 23 42 15
+			for (auto i : res) cout << a[i] << ' ';
+			cout << endl;
+			/*
+				32
+				240
+				966
+			*/
+		}
+	}
 }
 
 //  <========== MULTITSKNG ==========>
 
 signed main()
 {
-	srand(time(NULL));
-	ios::sync_with_stdio(false);
-	cin.tie(0); cout.tie(0);
+	//srand(time(NULL));
+	//ios::sync_with_stdio(false);
+	//cin.tie(0); cout.tie(0);
 	bool multiTestEnabled = false;
 	int t = (multiTestEnabled ? xin() : 1);
-	while (t--)MukachevoCamp2025::Day1::solveB();
+	while (t--)MukachevoCamp2025::Day3::solveF();
 }
 
 //  <========== NEARTOMORW ==========>
