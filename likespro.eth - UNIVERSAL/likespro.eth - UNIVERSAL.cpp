@@ -1,17 +1,17 @@
 ﻿/*
- *	.__  .__ __                                                 __  .__			░▒▓███████▓▒░░▒▓████████▓▒░▒▓███████▓▒░░▒▓█▓▒░░▒▓█▓▒░
- *	|  | |__|  | __ ____   ___________________  ____      _____/  |_|  |__		       ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░
- *	|  | |  |  |/ // __ \ /  ___/\____ \_  __ \/  _ \   _/ __ \   __\  |  \		       ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░
- *	|  |_|  |    <\  ___/ \___ \ |  |_> >  | \(  <_> )  \  ___/|  | |   Y  \	 ░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░░▒▓████████▓▒░
- *	|____/__|__|_ \\___  >____  >|   __/|__|   \____/ /\ \___  >__| |___|  /	░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░             ░▒▓█▓▒░
- *	             \/    \/     \/ |__|                 \/     \/          \/		░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░             ░▒▓█▓▒░
- *	                                                                            ░▒▓████████▓▒░▒▓████████▓▒░▒▓████████▓▒░      ░▒▓█▓▒░
+ *	.__  .__ __                                                 __  .__
+ *	|  | |__|  | __ ____   ___________________  ____      _____/  |_|  |__
+ *	|  | |  |  |/ // __ \ /  ___/\____ \_  __ \/  _ \   _/ __ \   __\  |  \
+ *	|  |_|  |    <\  ___/ \___ \ |  |_> >  | \(  <_> )  \  ___/|  | |   Y  \
+ *	|____/__|__|_ \\___  >____  >|   __/|__|   \____/ /\ \___  >__| |___|  /
+ *	             \/    \/     \/ |__|                 \/     \/          \/
+ *
 */
 
 /*
  * MIT License
  *
- * Copyright (c) 2024 likespro
+ * Copyright (c) 2025 likespro
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,10 @@
 #include <string>
 #include <sstream>
 #include <bitset>
+#include <numeric>
 #include <iomanip>
+#include <unordered_map>
+#include <random>
 
 //  <========== NAMESPACES ==========>
 
@@ -55,6 +58,7 @@ using namespace std;
 //  <========== DEFINTIONS ==========>
 
 #define int long long
+#define uint unsigned int
 #define sz size()
 #define pb push_back
 #define mp make_pair
@@ -73,10 +77,11 @@ using namespace std;
 
 #define iont int
 #define itn int
-#define for9int for(int 
+#define for9int for(int
 #define svap SVap
 #define breakl break
 #define continuel continue
+#define voif void
 
 //  <========== APPCONSTNS ==========>
 
@@ -88,6 +93,8 @@ using namespace std;
 #define YES "YES"
 #define NO "NO"
 #define BUF_SZ 1000000
+#define INT_MAX 2147483647
+#define INT_MIN -2147483648
 
 //  <========== CREATTYPES ==========>
 
@@ -107,10 +114,10 @@ using pii = pair<int, int>;
 using pdi = pair<double, int>;
 using pipii = pair<int, pii>;
 using tiii = Trip<int, int, int>;
-using vpii = vector < pii >;
-using vpdi = vector < pdi >;
-using vpipii = vector < pipii >;
-using vvpii = vector < vpii >;
+using vpii = vector<pii>;
+using vpdi = vector<pdi>;
+using vpipii = vector<pipii>;
+using vvpii = vector<vpii>;
 using vtiii = vector<tiii>;
 using vc = vector<char>;
 using vvc = vector<vc>;
@@ -131,6 +138,15 @@ using mivi = map<int, vi>;
 using qi = /* not BenQi */ queue<int>;
 using vqi = vector<qi>;
 
+//  <========== ABBREVIATS ==========>
+
+#define via vi a
+#define vib vi b
+#define vian vi a(n)
+#define viam vi a(m)
+#define vibn vi b(n)
+#define vibm vi b(m)
+
 //  <========== DEFINLNFXS ==========>
 
 #define retyes {printf("YES\n"); return;}
@@ -142,97 +158,15 @@ int xin() {
 	int n; cin >> n;
 	return n;
 }
-/*inline void fileio(string s) {
-	freopen((s + ".in").c_str(), "r", stdin);
-	freopen((s + ".out").c_str(), "w", stdout);
-}*/
+//inline void fileio(string s, string inputSuffix = ".in", string outputSuffix = ".out") {
+//	freopen((s + inputSuffix).c_str(), "r", stdin);
+//	freopen((s + outputSuffix).c_str(), "w", stdout);
+//}
 template<class _T1> void tros(_T1 start, _T1 end) {
 	//TODO SPEED UP THIS (COMPARATOR)
 	sort(start, end);
 	reverse(start, end);
 }
-int lis(vi a, vi& res) {
-	vi d(a.sz, INF);
-	int origMax = -1, maxI = -1;
-	for (int i = 0; i < a.sz; i++) {
-		auto lb = lower_bound(all(d), a[i]);
-		*lb = a[i];
-		if (lb - d.begin() > maxI) {
-			maxI = lb - d.begin();
-			origMax = a[i];
-		}
-	}
-	res.reserve(a.sz);
-	for (int i = 0; i < a.sz; i++) {
-		if (d[i] == INF)break;
-		res.pb(d[i]);
-	}
-	return origMax;
-}
-
-inline namespace Input {
-	char buf[BUF_SZ];
-	int pos;
-	int len;
-	char next_char() {
-		if (pos == len) {
-			pos = 0;
-			len = (int)fread(buf, 1, BUF_SZ, stdin);
-			if (!len) { return EOF; }
-		}
-		return buf[pos++];
-	}
-
-	int read_int() {
-		int x;
-		char ch;
-		int sgn = 1;
-		while (!isdigit(ch = next_char())) {
-			if (ch == '-') { sgn *= -1; }
-		}
-		x = ch - '0';
-		while (isdigit(ch = next_char())) { x = x * 10 + (ch - '0'); }
-		return x * sgn;
-	}
-}  // namespace Input
-inline namespace Output {
-	char buf[BUF_SZ];
-	int pos;
-
-	void flush_out() {
-		fwrite(buf, 1, pos, stdout);
-		pos = 0;
-	}
-
-	void write_char(char c) {
-		if (pos == BUF_SZ) { flush_out(); }
-		buf[pos++] = c;
-	}
-
-	void write_int(int x) {
-		static char num_buf[100];
-		if (x < 0) {
-			write_char('-');
-			x *= -1;
-		}
-		int len = 0;
-		for (; x >= 10; x /= 10) { num_buf[len++] = (char)('0' + (x % 10)); }
-		write_char((char)('0' + x));
-		while (len) { write_char(num_buf[--len]); }
-		write_char('\n');
-	}
-
-	// auto-flush output when program exits
-	void init_output() { assert(atexit(flush_out) == 0); }
-}
-
-//  <========== ABBREVIATS ==========>
-
-#define via vi a
-#define vib vi b
-#define vian vi a(n)
-#define vibn vi b(n)
-#define vibm vi b(m)
 
 //  <========== OPRTORSFXS ==========>
 
@@ -270,7 +204,7 @@ signed main()
 	cin.tie(0); cout.tie(0);
 	bool multiTestEnabled = false;
 	int t = (multiTestEnabled ? xin() : 1);
-	while (t--)CompilerTests::helloWorld();
+	while (t--) CompilerTests::helloWorld();
 }
 
 //  <========== NEARTOMORW ==========>
