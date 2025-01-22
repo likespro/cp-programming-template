@@ -49,6 +49,7 @@
 #include <numeric>
 #include <iomanip>
 #include <unordered_map>
+#include <stack>
 #include <random>
 
 //  <========== NAMESPACES ==========>
@@ -132,6 +133,8 @@ using mapsi = map<string, int>;
 using mib = map<int, bool>;
 using mipii = map<int, pii>;
 using mitiii = map<int, tiii>;
+using mpiib = map<pii, bool>;
+using mpiii = map<pii, int>;
 using mpiivpii = map<pii, vpii>;
 using misi = map<int, si>;
 using mivi = map<int, vi>;

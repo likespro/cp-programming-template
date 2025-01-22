@@ -1,11 +1,11 @@
 <p align="center">
  <img width="100px" src="https://github.com/likespro.png" align="center" alt="Competitive Template" />
  <h2 align="center">Competitive Programming Template by likespro</h2>
- <p align="center">Template for CP competitions used by likespro. Written in C++.</p>
+ <p align="center">Template for CP competitions such as ICPC, CodeForces, etc. Written in C++.</p>
 </p>
 <p align="center">
-    <a href="https://github.com/likespro/cp-programming-template/workflows/C/C++ CI">
-      <img alt="Build Passing" src="https://github.com/likespro/cp-programming-template/workflows/C/C++ CI/badge.svg" />
+    <a href="https://github.com/likespro/cp-programming-template">
+      <img alt="LICENSE" src="https://img.shields.io/badge/licence-MIT-yellow" />
     </a>
     <a href="https://github.com/likespro/cp-programming-template/graphs/contributors">
       <img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/likespro/cp-programming-template" />
@@ -18,20 +18,20 @@
     </a>
   </p>
 <p align="center">
-    <a href="https://sonarcloud.io/summary/new_code?id=likespro_cp-programming-template">
-      <img alt="Code Lines" src="https://sonarcloud.io/api/project_badges/measure?project=likespro_cp-programming-template&metric=ncloc" />
+    <a href="https://github.com/likespro/cp-programming-template/workflows/Main Branch Workflow">
+      <img alt="Build Passing" src="https://github.com/likespro/cp-programming-template/workflows/Main Branch Workflow/badge.svg" />
     </a>
-    <a href="https://sonarcloud.io/summary/new_code?id=likespro_cp-programming-template">
-      <img alt="Quality Rate" src="https://sonarcloud.io/api/project_badges/measure?project=likespro_cp-programming-template&metric=alert_status" />
+    <a href="https://app.codacy.com/gh/likespro/cp-programming-template/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade">
+      <img src="https://app.codacy.com/project/badge/Grade/59828f3512224a018a6930c0c68c5a71"/>
     </a>
-    <a href="https://sonarcloud.io/summary/new_code?id=likespro_cp-programming-template">
-      <img alt="Bugs" src="https://sonarcloud.io/api/project_badges/measure?project=likespro_cp-programming-template&metric=bugs" />
+    <a href="https://github.com/axusinc/cp-programming-template">
+      <img alt="Git Size" src="https://img.shields.io/endpoint?url=https://github.com/axusinc/cp-programming-template/blob/badges/git-size.md?raw=true" />
     </a>
-    <a href="https://sonarcloud.io/summary/new_code?id=likespro_cp-programming-template">
-      <img alt="Technical Debt" src="https://sonarcloud.io/api/project_badges/measure?project=likespro_cp-programming-template&metric=sqale_index" />
+    <a href="https://github.com/axusinc/cp-programming-template">
+      <img alt="Git File Count" src="https://img.shields.io/endpoint?url=https://github.com/axusinc/cp-programming-template/blob/badges/git-file-count.md?raw=true" />
     </a>
-    <a href="https://sonarcloud.io/summary/new_code?id=likespro_cp-programming-template">
-      <img alt="Maintability" src="https://sonarcloud.io/api/project_badges/measure?project=likespro_cp-programming-template&metric=sqale_rating" />
+    <a href="https://github.com/axusinc/cp-programming-template">
+      <img alt="Git Lines Of Code" src="https://img.shields.io/endpoint?url=https://github.com/axusinc/cp-programming-template/blob/badges/git-lines-of-code.md?raw=true" />
     </a>
   </p>
 
@@ -40,7 +40,7 @@
 
 
 ## Overview
-A C++ template that likespro uses for competitions such as ICPC, CodeForces, AtCoder, etc.
+A C++ template for competitions such as ICPC, CodeForces, AtCoder, etc.
 
 The main goal of this template is to be very powerful and convenient.
 
@@ -87,7 +87,7 @@ Just copy & paste content of "likespro.eth - UNIVERSAL/likespro.eth - UNIVERSAL.
 * `rofin` = `for(int i = n; i >= 0; i--)`
 * `fori(n)` = `for(int i = 0; i < (n); i++)`
 * `rofi(n)` = `for(int i = (n); i >= 0; i--)`
-### Definitions for Wrong Spelling
+### Definitions against Wrong Spelling
 * `iont` = `int`
 * `itn` = `int`
 * `for9int` = `for(int`

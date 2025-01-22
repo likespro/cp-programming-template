@@ -1,0 +1,90 @@
+name: Main Branch Workflow
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-windows-vs:
+    name: build-windows-vs
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Compile with VS 2022
+      shell: cmd 
+      run: ${{ '"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat" && msbuild' }}
+      working-directory: 'likespro.eth - UNIVERSAL'
+    - name: Run
+      run: |
+        "likespro.eth - UNIVERSAL\Debug\likespro.eth - UNIVERSAL.exe"
+      shell: cmd
+    - name: Upload executable
+      uses: actions/upload-artifact@v4
+      with:
+        name: windows
+        path: |
+          "likespro.eth - UNIVERSAL\Debug\likespro.eth - UNIVERSAL.exe"
+  build-mac-and-ubuntu:
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    name: 'build-${{matrix.os}}'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile with GCC
+        run: |
+          g++ -std=c++17 'likespro.eth - UNIVERSAL/likespro.eth - UNIVERSAL.cpp' -o 'likespro.eth - UNIVERSAL.o'
+      - name: Run
+        run: |
+          './likespro.eth - UNIVERSAL.o'
+        shell: bash
+      - name: Upload executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{matrix.os}}
+          path: |
+            'likespro.eth - UNIVERSAL.o'
+
+  build-git-badges:
+    name: Build Git Badges
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Output git info
+        id: git_info
+        run: |
+          function format_size { echo $(numfmt --to iec --suffix B $1); }
+          function format_number { LC_ALL=en_US.UTF-8 printf "%'d\n" $1; }
+          echo "file_count=$(format_number $(git ls-files | wc -l))" >> $GITHUB_OUTPUT
+          echo "lines_of_code=$(git ls-files | grep '\.cpp' | xargs wc -l)" >> $GITHUB_OUTPUT
+          git gc
+          echo "size=$(format_size $(($(git count-objects -v | grep 'size-pack: ' | sed 's/size-pack: //g' | tr -d '\n') * 1024)))" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Generate-Badge
+        uses: ./.github/actions/generate-badge
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          filename: |
+            (
+              "git-size"
+              "git-file-count"
+              "git-lines-of-code"
+            )
+          label: ("size" "files" "lines-of-code")
+          message: |
+            (
+              "${{ steps.git_info.outputs.size }}"
+              "${{ steps.git_info.outputs.file_count }}"
+              "${{ steps.git_info.outputs.lines_of_code }}"
+            )
+          namedLogo: ("git" "git" "git")
+          color: ("f1502f" "f1502f" "f1502f")
