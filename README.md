@@ -25,13 +25,13 @@
       <img src="https://app.codacy.com/project/badge/Grade/59828f3512224a018a6930c0c68c5a71"/>
     </a>
     <a href="https://github.com/axusinc/cp-programming-template">
-      <img alt="Git Size" src="https://img.shields.io/endpoint?url=https://github.com/axusinc/cp-programming-template/blob/badges/git-size.md?raw=true" />
+      <img alt="Git Size" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/likespro/cp-programming-template/badges/git-size.md?raw=true" />
     </a>
     <a href="https://github.com/axusinc/cp-programming-template">
-      <img alt="Git File Count" src="https://img.shields.io/endpoint?url=https://github.com/axusinc/cp-programming-template/blob/badges/git-file-count.md?raw=true" />
+      <img alt="Git File Count" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/likespro/cp-programming-template/badges/git-file-count.md?raw=true" />
     </a>
     <a href="https://github.com/axusinc/cp-programming-template">
-      <img alt="Git Lines Of Code" src="https://img.shields.io/endpoint?url=https://github.com/axusinc/cp-programming-template/blob/badges/git-lines-of-code.md?raw=true" />
+      <img alt="Git Lines Of Code" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/likespro/cp-programming-template/badges/git-lines-of-code.md?raw=true" />
     </a>
   </p>
 
