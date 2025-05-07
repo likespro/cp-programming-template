@@ -26,6 +26,7 @@ jobs:
         name: windows
         path: |
           "likespro.eth - UNIVERSAL\Debug\likespro.eth - UNIVERSAL.exe"
+
   build-mac-and-ubuntu:
     runs-on: ${{matrix.os}}
     strategy:
@@ -48,12 +49,11 @@ jobs:
           path: |
             'likespro.eth - UNIVERSAL.o'
 
-  build-git-badges:
-    name: Build Git Badges
+  generate-git-badges:
+    name: Generate Git Badges
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -64,13 +64,13 @@ jobs:
           function format_size { echo $(numfmt --to iec --suffix B $1); }
           function format_number { LC_ALL=en_US.UTF-8 printf "%'d\n" $1; }
           echo "file_count=$(format_number $(git ls-files | wc -l))" >> $GITHUB_OUTPUT
-          echo "lines_of_code=$(git ls-files | grep '\.cpp' | xargs wc -l)" >> $GITHUB_OUTPUT
+          echo "lines_of_code=$(find . -type f -name "*.cpp" -exec wc -l {} + | awk '{s+=$1} END {print s}')" >> $GITHUB_OUTPUT
           git gc
           echo "size=$(format_size $(($(git count-objects -v | grep 'size-pack: ' | sed 's/size-pack: //g' | tr -d '\n') * 1024)))" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Generate-Badge
-        uses: ./.github/actions/generate-badge
+        uses: likespro/generate-badge@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           filename: |
